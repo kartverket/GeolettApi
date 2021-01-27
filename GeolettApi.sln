@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0CF0C385-25D2-45F7-A4B7-FC56E4AD75B2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{7E09DF11-FE61-4B78-8D0D-CA3D8CDA7BFE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{86C7105C-7735-4F51-8C0A-22042665050E}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\add-migration.cmd = scripts\add-migration.cmd
+		scripts\update-database.cmd = scripts\update-database.cmd
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeolettApi.Web", "src\GeolettApi.Web\GeolettApi.Web.csproj", "{4534B5A8-56ED-4B57-885F-50EC33DBAA73}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeolettApi.Application", "src\GeolettApi.Application\GeolettApi.Application.csproj", "{D451B63E-516D-41EF-8AE2-1B176BBCCE94}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeolettApi.Domain", "src\GeolettApi.Domain\GeolettApi.Domain.csproj", "{44EFA839-1D07-4589-B7E9-BFAB25242E17}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeolettApi.Infrastructure", "src\GeolettApi.Infrastructure\GeolettApi.Infrastructure.csproj", "{ADC1BAAB-158C-482D-B4EB-CF234305A66C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4534B5A8-56ED-4B57-885F-50EC33DBAA73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4534B5A8-56ED-4B57-885F-50EC33DBAA73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4534B5A8-56ED-4B57-885F-50EC33DBAA73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4534B5A8-56ED-4B57-885F-50EC33DBAA73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D451B63E-516D-41EF-8AE2-1B176BBCCE94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D451B63E-516D-41EF-8AE2-1B176BBCCE94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D451B63E-516D-41EF-8AE2-1B176BBCCE94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D451B63E-516D-41EF-8AE2-1B176BBCCE94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44EFA839-1D07-4589-B7E9-BFAB25242E17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44EFA839-1D07-4589-B7E9-BFAB25242E17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44EFA839-1D07-4589-B7E9-BFAB25242E17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44EFA839-1D07-4589-B7E9-BFAB25242E17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADC1BAAB-158C-482D-B4EB-CF234305A66C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADC1BAAB-158C-482D-B4EB-CF234305A66C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADC1BAAB-158C-482D-B4EB-CF234305A66C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADC1BAAB-158C-482D-B4EB-CF234305A66C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4534B5A8-56ED-4B57-885F-50EC33DBAA73} = {0CF0C385-25D2-45F7-A4B7-FC56E4AD75B2}
+		{D451B63E-516D-41EF-8AE2-1B176BBCCE94} = {0CF0C385-25D2-45F7-A4B7-FC56E4AD75B2}
+		{44EFA839-1D07-4589-B7E9-BFAB25242E17} = {0CF0C385-25D2-45F7-A4B7-FC56E4AD75B2}
+		{ADC1BAAB-158C-482D-B4EB-CF234305A66C} = {0CF0C385-25D2-45F7-A4B7-FC56E4AD75B2}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {772577BF-AFB2-4813-8DCE-4A59B9644177}
+	EndGlobalSection
+EndGlobal
