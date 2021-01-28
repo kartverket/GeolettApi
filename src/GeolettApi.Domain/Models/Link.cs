@@ -1,6 +1,6 @@
 ﻿namespace GeolettApi.Domain.Models
 {
-    public class Link : ValidatableEntity
+    public class Link : EntityBase
     {
         public string Text { get; set; }
         public string Url { get; set; }

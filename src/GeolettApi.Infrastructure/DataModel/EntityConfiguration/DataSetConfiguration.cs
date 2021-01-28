@@ -23,10 +23,7 @@ namespace GeolettApi.Infrastructure.DataModel.EntityConfiguration
             builder
                 .HasOne(dataSet => dataSet.TypeReference)
                 .WithOne()
-                .HasForeignKey<ObjectType>(objectType => objectType.DataSetId);
-
-            builder
-                .Ignore(dataSet => dataSet.ValidationResult);
+                .HasForeignKey<DataSet>(dataSet => dataSet.ObjectTypeId);
         }
     }
 }

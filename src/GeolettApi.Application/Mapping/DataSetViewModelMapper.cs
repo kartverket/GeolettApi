@@ -1,21 +1,16 @@
-﻿using FluentValidation.Results;
-using GeolettApi.Application.Models;
+﻿using GeolettApi.Application.Models;
 using GeolettApi.Domain.Models;
-using System.Collections.Generic;
 
 namespace GeolettApi.Application.Mapping
 {
     public class DataSetViewModelMapper : IViewModelMapper<DataSet, DataSetViewModel>
     {
         private readonly IViewModelMapper<ObjectType, ObjectTypeViewModel> _objectTypeViewModelMapper;
-        private readonly IViewModelMapper<ValidationResult, List<string>> _validationErrorViewModelMapper;
 
         public DataSetViewModelMapper(
-            IViewModelMapper<ObjectType, ObjectTypeViewModel> objectTypeViewModelMapper,
-            IViewModelMapper<ValidationResult, List<string>> validationErrorViewModelMapper)
+            IViewModelMapper<ObjectType, ObjectTypeViewModel> objectTypeViewModelMapper)
         {
             _objectTypeViewModelMapper = objectTypeViewModelMapper;
-            _validationErrorViewModelMapper = validationErrorViewModelMapper;
         }
 
         public DataSet MapToDomainModel(DataSetViewModel viewModel)
@@ -26,7 +21,6 @@ namespace GeolettApi.Application.Mapping
             return new DataSet
             {
                 Id = viewModel.Id,
-                RegisterItemId = viewModel.RegisterItemId,
                 Title = viewModel.Title,
                 UrlMetadata = viewModel.UrlMetadata,
                 BufferDistance = viewModel.BufferDistance,
@@ -45,15 +39,13 @@ namespace GeolettApi.Application.Mapping
             return new DataSetViewModel
             {
                 Id = domainModel.Id,
-                RegisterItemId = domainModel.RegisterItemId,
                 Title = domainModel.Title,
                 UrlMetadata = domainModel.UrlMetadata,
                 BufferDistance = domainModel.BufferDistance,
                 BufferText = domainModel.BufferText,
                 UrlGmlSchema = domainModel.UrlGmlSchema,
                 Namespace = domainModel.Namespace,
-                TypeReference = _objectTypeViewModelMapper.MapToViewModel(domainModel.TypeReference),
-                ValidationErrors = _validationErrorViewModelMapper.MapToViewModel(domainModel.ValidationResult)
+                TypeReference = _objectTypeViewModelMapper.MapToViewModel(domainModel.TypeReference)
             };
         }
     }

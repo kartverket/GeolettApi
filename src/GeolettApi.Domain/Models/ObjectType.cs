@@ -1,8 +1,7 @@
 ﻿namespace GeolettApi.Domain.Models
 {
-    public class ObjectType : ValidatableEntity
+    public class ObjectType : EntityBase
     {
-        public int DataSetId { get; set; }
         public string Type { get; set; }
         public string Attribute { get; set; }
         public string CodeValue { get; set; }

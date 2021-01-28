@@ -1,7 +1,7 @@
 ﻿using GeolettApi.Application.Exceptions;
-using GeolettApi.Application.Models;
 using GeolettApi.Application.Services.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -22,25 +22,15 @@ namespace GeolettApi.Web.Controllers
         {
             _logger.LogError(exception.ToString());
 
-            switch (exception)
+            return exception switch
             {
-                case ArgumentException _:
-                case FormatException _:
-                    return BadRequest();
-                case AuthorizationException ex:
-                    return StatusCode(StatusCodes.Status403Forbidden, ex.Message);
-                case WorkProcessException ex:
-                    return StatusCode(StatusCodes.Status422UnprocessableEntity, ex.Message);
-                case Exception _:
-                    return StatusCode(StatusCodes.Status500InternalServerError);
-            }
-
-            return null;
-        }
-
-        protected void LogValidationErrors(ViewModelWithValidation viewModel)
-        {
-            _logger.LogInformation($"Error validating {viewModel.GetType().Name}: {string.Join(", ", viewModel.ValidationErrors)}");
+                ArgumentException _ or FormatException _ or JsonPatchException _ => BadRequest(),
+                InvalidModelException ex => BadRequest(ex.Errors),
+                AuthorizationException ex => StatusCode(StatusCodes.Status403Forbidden, ex.Message),
+                WorkProcessException ex => StatusCode(StatusCodes.Status422UnprocessableEntity, ex.Message),
+                Exception _ => StatusCode(StatusCodes.Status500InternalServerError),
+                _ => null
+            };
         }
     }
 }

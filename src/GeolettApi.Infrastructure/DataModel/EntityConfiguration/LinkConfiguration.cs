@@ -23,9 +23,6 @@ namespace GeolettApi.Infrastructure.DataModel.EntityConfiguration
             builder
                 .Property(link => link.Url)
                 .IsRequired();
-
-            builder
-                .Ignore(link => link.ValidationResult);
         }
     }
 }

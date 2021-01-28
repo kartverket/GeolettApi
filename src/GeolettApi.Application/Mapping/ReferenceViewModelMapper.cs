@@ -1,21 +1,16 @@
-﻿using FluentValidation.Results;
-using GeolettApi.Application.Models;
+﻿using GeolettApi.Application.Models;
 using GeolettApi.Domain.Models;
-using System.Collections.Generic;
 
 namespace GeolettApi.Application.Mapping
 {
     public class ReferenceViewModelMapper : IViewModelMapper<Reference, ReferenceViewModel>
     {
         private readonly IViewModelMapper<Link, LinkViewModel> _linkViewModelMapper;
-        private readonly IViewModelMapper<ValidationResult, List<string>> _validationErrorViewModelMapper;
 
         public ReferenceViewModelMapper(
-            IViewModelMapper<Link, LinkViewModel> linkViewModelMapper,
-            IViewModelMapper<ValidationResult, List<string>> validationErrorViewModelMapper)
+            IViewModelMapper<Link, LinkViewModel> linkViewModelMapper)
         {
             _linkViewModelMapper = linkViewModelMapper;
-            _validationErrorViewModelMapper = validationErrorViewModelMapper;
         }
 
         public Reference MapToDomainModel(ReferenceViewModel viewModel)
@@ -26,7 +21,6 @@ namespace GeolettApi.Application.Mapping
             return new Reference
             {
                 Id = viewModel.Id,
-                RegisterItemId = viewModel.RegisterItemId,
                 Title = viewModel.Title,
                 Tek17 = _linkViewModelMapper.MapToDomainModel(viewModel.Tek17),
                 OtherLaw = _linkViewModelMapper.MapToDomainModel(viewModel.OtherLaw),
@@ -42,12 +36,10 @@ namespace GeolettApi.Application.Mapping
             return new ReferenceViewModel
             {
                 Id = domainModel.Id,
-                RegisterItemId = domainModel.RegisterItemId,
                 Title = domainModel.Title,
                 Tek17 = _linkViewModelMapper.MapToViewModel(domainModel.Tek17),
                 OtherLaw = _linkViewModelMapper.MapToViewModel(domainModel.OtherLaw),
-                CircularFromMinistry = _linkViewModelMapper.MapToViewModel(domainModel.CircularFromMinistry),
-                ValidationErrors = _validationErrorViewModelMapper.MapToViewModel(domainModel.ValidationResult)
+                CircularFromMinistry = _linkViewModelMapper.MapToViewModel(domainModel.CircularFromMinistry)
             };
         }
     }

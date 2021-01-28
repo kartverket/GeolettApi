@@ -1,8 +1,7 @@
 ﻿namespace GeolettApi.Domain.Models
 {
-    public class Reference : ValidatableEntity
+    public class Reference : EntityBase
     {
-        public int RegisterItemId { get; set; }
         public string Title { get; set; }
         public int? Tek17Id { get; set; }
         public Link Tek17 { get; set; }

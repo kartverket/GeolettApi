@@ -1,20 +1,10 @@
-﻿using FluentValidation.Results;
-using GeolettApi.Application.Models;
+﻿using GeolettApi.Application.Models;
 using GeolettApi.Domain.Models;
-using System.Collections.Generic;
 
 namespace GeolettApi.Application.Mapping
 {
     public class LinkViewModelMapper : IViewModelMapper<Link, LinkViewModel>
     {
-        private readonly IViewModelMapper<ValidationResult, List<string>> _validationErrorViewModelMapper;
-
-        public LinkViewModelMapper(
-            IViewModelMapper<ValidationResult, List<string>> validationErrorViewModelMapper)
-        {
-            _validationErrorViewModelMapper = validationErrorViewModelMapper;
-        }
-
         public Link MapToDomainModel(LinkViewModel viewModel)
         {
             if (viewModel == null)
@@ -37,8 +27,7 @@ namespace GeolettApi.Application.Mapping
             {
                 Id = domainModel.Id,
                 Text = domainModel.Text,
-                Url = domainModel.Url,
-                ValidationErrors = _validationErrorViewModelMapper.MapToViewModel(domainModel.ValidationResult)
+                Url = domainModel.Url
             };
         }
     }

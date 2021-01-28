@@ -22,27 +22,18 @@ namespace GeolettApi.Infrastructure.DataModel.EntityConfiguration
 
             builder
                 .HasOne(reference => reference.Tek17)
-                .WithMany()
-                .HasForeignKey(reference => reference.Tek17Id)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
+                .WithOne()
+                .HasForeignKey<Reference>(reference => reference.Tek17Id);
 
             builder
                 .HasOne(reference => reference.OtherLaw)
-                .WithMany()
-                .HasForeignKey(reference => reference.OtherLawId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
+                .WithOne()
+                .HasForeignKey<Reference>(reference => reference.OtherLawId);
 
             builder
                 .HasOne(reference => reference.CircularFromMinistry)
-                .WithMany()
-                .HasForeignKey(reference => reference.CircularFromMinistryId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder
-                .Ignore(reference => reference.ValidationResult);
+                .WithOne()
+                .HasForeignKey<Reference>(reference => reference.CircularFromMinistryId);
         }
     }
 }

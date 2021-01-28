@@ -2,6 +2,7 @@
 using GeolettApi.Application.Queries;
 using GeolettApi.Application.Services;
 using GeolettApi.Web.Controllers;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -14,11 +15,11 @@ namespace Geonorge.TiltaksplanApi.Web.Controllers
     public class RegisterItemController : BaseController
     {
         private readonly IRegisterItemService _registerItemService;
-        private readonly IRegisterItemQuery _registerItemQuery;
+        private readonly IAsyncQuery<RegisterItemViewModel> _registerItemQuery;
 
         public RegisterItemController(
             IRegisterItemService registerItemService,
-            IRegisterItemQuery registerItemQuery,
+            IAsyncQuery<RegisterItemViewModel> registerItemQuery,
             ILogger<RegisterItemController> logger) : base(logger)
         {
             _registerItemService = registerItemService;
@@ -75,12 +76,7 @@ namespace Geonorge.TiltaksplanApi.Web.Controllers
             {
                 var resultViewModel = await _registerItemService.CreateAsync(viewModel);
 
-                if (resultViewModel?.IsValid ?? false)
-                    return Created("", resultViewModel);
-
-                LogValidationErrors(resultViewModel);
-
-                return BadRequest(resultViewModel.ValidationErrors);
+                return Created("", resultViewModel);
             }
             catch (Exception exception)
             {
@@ -103,12 +99,30 @@ namespace Geonorge.TiltaksplanApi.Web.Controllers
             {
                 var resultViewModel = await _registerItemService.UpdateAsync(id, viewModel);
 
-                if (resultViewModel?.IsValid ?? false)
-                    return Ok(resultViewModel);
+                return Ok(resultViewModel);
+            }
+            catch (Exception exception)
+            {
+                var result = HandleException(exception);
 
-                LogValidationErrors(resultViewModel);
+                if (result != null)
+                    return result;
 
-                return BadRequest(resultViewModel.ValidationErrors);
+                throw;
+            }
+        }
+
+        [HttpPatch("{id:int}")]
+        public async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<RegisterItemViewModel> patchDocument)
+        {
+            if (id == 0 || patchDocument == null)
+                return BadRequest();
+
+            try
+            {
+                var resultViewModel = await _registerItemService.UpdateAsync(id, patchDocument);
+
+                return Ok(resultViewModel);
             }
             catch (Exception exception)
             {
@@ -129,9 +143,12 @@ namespace Geonorge.TiltaksplanApi.Web.Controllers
 
             try
             {
-                await _registerItemService.DeleteAsync(id);
+                var deleted = await _registerItemService.DeleteAsync(id);
 
-                return Ok(id);
+                if (deleted)
+                    return Ok(id);
+
+                return BadRequest();
             }
             catch (Exception exception)
             {

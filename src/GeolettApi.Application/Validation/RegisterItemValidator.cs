@@ -15,8 +15,12 @@ namespace Geonorge.TiltaksplanApi.Application.Validation
                 .WithMessage(registerItem => localizer["Title"]);
 
             RuleForEach(registerItem => registerItem.Links)
-                .SetValidator(new LinkValidator(localizer))
-                .When(registerItem => registerItem.Links != null);
+                .ChildRules(registerItemLink => 
+                {
+                    registerItemLink.RuleFor(link => link.Link)
+                        .SetValidator(new LinkValidator(localizer))
+                        .When(link => link.Link != null);
+                });
 
             RuleFor(registerItem => registerItem.DataSet)
                 .SetValidator(new DataSetValidator(localizer))

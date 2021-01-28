@@ -20,6 +20,7 @@ namespace GeolettApi.Infrastructure.DataModel
         public DbSet<Reference> References { get; set; }
         public DbSet<ObjectType> ObjectTypes { get; set; }
         public DbSet<Link> Links { get; set; }
+        public DbSet<RegisterItemLink> RegisterItemLinks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -29,6 +30,7 @@ namespace GeolettApi.Infrastructure.DataModel
             builder.Entity<DataSet>(DataSetConfiguration.Configure);
             builder.Entity<Reference>(ReferenceConfiguration.Configure);
             builder.Entity<ObjectType>(ObjectTypeConfiguration.Configure);
+            builder.Entity<RegisterItemLink>(RegisterItemLinkConfiguration.Configure);
             builder.Entity<Link>(LinkConfiguration.Configure);
 
             base.OnModelCreating(builder);

@@ -1,14 +1,14 @@
 ﻿namespace GeolettApi.Domain.Models
 {
-    public class DataSet : ValidatableEntity
+    public class DataSet : EntityBase
     {
-        public int RegisterItemId { get; set; }
         public string Title { get; set; }
         public string UrlMetadata { get; set; }
         public int? BufferDistance { get; set; }
         public string BufferText { get; set; }
         public string UrlGmlSchema { get; set; }
         public string Namespace { get; set; }
+        public int ObjectTypeId { get; set; }
         public ObjectType TypeReference { get; set; }
 
         public override void Update(EntityBase updatedEntity)

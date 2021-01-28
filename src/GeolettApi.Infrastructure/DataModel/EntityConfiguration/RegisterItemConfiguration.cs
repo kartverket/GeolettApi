@@ -23,22 +23,19 @@ namespace GeolettApi.Infrastructure.DataModel.EntityConfiguration
             builder
                 .HasOne(registerItem => registerItem.DataSet)
                 .WithOne()
-                .HasForeignKey<DataSet>(dataSet => dataSet.RegisterItemId);
+                .HasForeignKey<RegisterItem>(registerItem => registerItem.DataSetId);
 
             builder
                 .HasOne(registerItem => registerItem.Reference)
                 .WithOne()
-                .HasForeignKey<Reference>(reference => reference.RegisterItemId);
+                .HasForeignKey<RegisterItem>(registerItem => registerItem.ReferenceId);
 
             builder
                 .HasMany(registerItem => registerItem.Links)
                 .WithOne()
-                .HasForeignKey(link => link.RegisterItemId)
+                .HasForeignKey(registerItemLink => registerItemLink.RegisterItemId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
-
-            builder
-                .Ignore(activity => activity.ValidationResult);
         }
     }
 }

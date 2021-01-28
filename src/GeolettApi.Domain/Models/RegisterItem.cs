@@ -3,18 +3,18 @@ using System.Collections.Generic;
 
 namespace GeolettApi.Domain.Models
 {
-    public class RegisterItem : ValidatableEntity
+    public class RegisterItem : EntityBase
     {
         public string ContextType { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public List<Link> Links { get; set; }
+        public List<RegisterItemLink> Links { get; set; }
         public string DialogText { get; set; }
         public string PossibleMeasures { get; set; }
         public string Guidance { get; set; }
-        public int DataSetId { get; set; }
+        public int? DataSetId { get; set; }
         public DataSet DataSet { get; set; }
-        public int ReferenceId { get; set; }
+        public int? ReferenceId { get; set; }
         public Reference Reference { get; set; }
         public string TechnicalComment { get; set; }
         public string OtherComment { get; set; }

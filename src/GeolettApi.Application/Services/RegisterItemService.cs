@@ -1,10 +1,12 @@
 ﻿using FluentValidation;
+using GeolettApi.Application.Helpers;
 using GeolettApi.Application.Mapping;
 using GeolettApi.Application.Models;
 using GeolettApi.Application.Services.Authorization;
 using GeolettApi.Domain.Models;
 using GeolettApi.Domain.Repositories;
 using GeolettApi.Infrastructure.DataModel.UnitOfWork;
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Threading.Tasks;
 
@@ -38,13 +40,12 @@ namespace GeolettApi.Application.Services
 
             var registerItem = _registerItemViewModelMapper.MapToDomainModel(viewModel);
 
-            if (IsValid(registerItem))
-            {
-                using var uow = _uowManager.GetUnitOfWork();
-                registerItem.LastUpdated = DateTime.Now;
-                _registerItemRepository.Create(registerItem);
-                await uow.SaveChangesAsync();
-            }
+            ValidationHelper.Validate(_registerItemValidator, registerItem);
+
+            using var uow = _uowManager.GetUnitOfWork();
+            registerItem.LastUpdated = DateTime.Now;
+            _registerItemRepository.Create(registerItem);
+            await uow.SaveChangesAsync();
 
             return _registerItemViewModelMapper.MapToViewModel(registerItem);
         }
@@ -56,37 +57,55 @@ namespace GeolettApi.Application.Services
             var update = _registerItemViewModelMapper.MapToDomainModel(viewModel);
 
             using var uow = _uowManager.GetUnitOfWork();
-            var registerItem = await _registerItemRepository
-                .GetByIdAsync(id);
 
+            var registerItem = await _registerItemRepository.GetByIdAsync(id);
             registerItem.Update(update);
 
-            if (IsValid(registerItem))
-            {
-                registerItem.LastUpdated = DateTime.Now;
-                await uow.SaveChangesAsync();
-            }
+            ValidationHelper.Validate(_registerItemValidator, registerItem);
+
+            registerItem.LastUpdated = DateTime.Now;
+            await uow.SaveChangesAsync();
 
             return _registerItemViewModelMapper.MapToViewModel(registerItem);
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task<RegisterItemViewModel> UpdateAsync(int id, JsonPatchDocument<RegisterItemViewModel> patchDocument)
+        {
+            await _authorizationService.AuthorizeActivity(UserActivity.UpdateRegisterItem);
+
+            var existing = await _registerItemRepository.GetByIdAsync(id);
+            var existingViewModel = _registerItemViewModelMapper.MapToViewModel(existing);
+
+            patchDocument.ApplyTo(existingViewModel);
+
+            using var uow = _uowManager.GetUnitOfWork();
+
+            var updated = _registerItemViewModelMapper.MapToDomainModel(existingViewModel);
+            existing.Update(updated);          
+
+            ValidationHelper.Validate(_registerItemValidator, existing);
+
+            existing.LastUpdated = DateTime.Now;
+            await uow.SaveChangesAsync();
+
+            return _registerItemViewModelMapper.MapToViewModel(existing);
+        }
+
+        public async Task<bool> DeleteAsync(int id)
         {
             await _authorizationService.AuthorizeActivity(UserActivity.DeleteRegisterItem);
 
             using var uow = _uowManager.GetUnitOfWork();
 
             var registerItem = await _registerItemRepository.GetByIdAsync(id);
+
+            if (registerItem == null)
+                return false;
+
             _registerItemRepository.Delete(registerItem);
-
             await uow.SaveChangesAsync();
-        }
 
-        private bool IsValid(RegisterItem registerItem)
-        {
-            registerItem.ValidationResult = _registerItemValidator.Validate(registerItem);
-
-            return registerItem.ValidationResult.IsValid;
+            return true;
         }
     }
 }

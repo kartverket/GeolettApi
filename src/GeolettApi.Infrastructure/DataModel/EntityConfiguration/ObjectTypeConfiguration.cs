@@ -15,9 +15,6 @@ namespace GeolettApi.Infrastructure.DataModel.EntityConfiguration
             builder
                 .Property(objectType => objectType.Id)
                 .ValueGeneratedOnAdd();
-
-            builder
-                .Ignore(objectType => objectType.ValidationResult);
         }
     }
 }

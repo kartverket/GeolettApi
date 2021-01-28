@@ -46,7 +46,8 @@ namespace GeolettApi.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
-            services.AddControllers();
+
+            services.AddControllers().AddNewtonsoftJson();
 
             services.AddSwaggerGen(options =>
             {
@@ -104,7 +105,8 @@ namespace GeolettApi.Web
             services.AddTransient<IValidator<Link>, LinkValidator>();
 
             // Queries
-            services.AddTransient<IRegisterItemQuery, RegisterItemQuery>();
+            services.AddTransient<IAsyncQuery<RegisterItemViewModel>, RegisterItemQuery>();
+            services.AddTransient<IAsyncQuery<DataSetViewModel>, DataSetQuery>();
 
             // Repositories
             services.AddScoped<IRepository<RegisterItem, int>, RegisterItemRepository>();
@@ -115,8 +117,8 @@ namespace GeolettApi.Web
             services.AddTransient<IViewModelMapper<Reference, ReferenceViewModel>, ReferenceViewModelMapper>();
             services.AddTransient<IViewModelMapper<ObjectType, ObjectTypeViewModel>, ObjectTypeViewModelMapper>();
             services.AddTransient<IViewModelMapper<Link, LinkViewModel>, LinkViewModelMapper>();
-            services.AddTransient<IViewModelMapper<ValidationResult, List<string>>, ValidationErrorViewModelMapper>();
-
+            services.AddTransient<IViewModelMapper<RegisterItemLink, RegisterItemLinkViewModel>, RegisterItemLinkViewModelMapper>();
+            
             // Configuration
             services.Configure<GeoIDConfiguration>(Configuration.GetSection(GeoIDConfiguration.SectionName));
         }
