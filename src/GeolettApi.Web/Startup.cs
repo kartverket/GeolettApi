@@ -26,6 +26,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Collections.Generic;
+using GeolettApi.Infrastructure.DataModel;
+using Microsoft.EntityFrameworkCore;
 
 namespace GeolettApi.Web
 {
@@ -162,7 +164,17 @@ namespace GeolettApi.Web
                 endpoints.MapControllers();
             });
 
+            UpdateDatabase(app);
+
             hostApplicationLifetime.ApplicationStopped.Register(Log.CloseAndFlush);
+        }
+
+        private void UpdateDatabase(IApplicationBuilder app)
+        {
+            using var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
+            using var context = serviceScope.ServiceProvider.GetService<GeolettContext>();
+
+            context.Database.Migrate();
         }
     }
 }
