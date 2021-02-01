@@ -150,7 +150,7 @@ namespace GeolettApi.Web
             app.UseSwaggerUI(options =>
             {
                 var url = $"{(!env.IsLocal() ? "/api" : "")}/swagger/v1/swagger.json";
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "GeolettApi.Web v1");
+                options.SwaggerEndpoint(url, "GeolettApi.Web v1");
             });
 
             app.UseHttpsRedirection();
