@@ -29,6 +29,10 @@ using System.Collections.Generic;
 using GeolettApi.Infrastructure.DataModel;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.IO;
+using System.Reflection;
+using System;
+using System.Linq;
 
 namespace GeolettApi.Web
 {
@@ -84,6 +88,19 @@ namespace GeolettApi.Web
                         new List<string>()
                     }
                 });
+
+                //Collect all referenced projects output XML document file paths  
+                var currentAssembly = Assembly.GetExecutingAssembly();
+                var xmlDocs = currentAssembly.GetReferencedAssemblies()
+                .Union(new AssemblyName[] { currentAssembly.GetName() })
+                .Select(a => Path.Combine(Path.GetDirectoryName(currentAssembly.Location), $"{a.Name}.xml"))
+                .Where(f => File.Exists(f)).ToArray();
+
+                Array.ForEach(xmlDocs, (d) =>
+                {
+                    options.IncludeXmlComments(d);
+                });
+
             });
 
             services.AddEntityFrameworkForGeolett(Configuration);

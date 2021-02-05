@@ -11,6 +11,9 @@ namespace GeolettApi.Application.Models
         public string Description { get; set; }
         public List<RegisterItemLinkViewModel> Links { get; set; }
         public string DialogText { get; set; }
+        /// <summary>
+        /// Denne teksten skal fungere som en hjelp til søkeren til å komme videre i prosessen
+        /// </summary>
         public string PossibleMeasures { get; set; }
         public string Guidance { get; set; }
         public DataSetViewModel DataSet { get; set; }
