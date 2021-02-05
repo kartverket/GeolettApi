@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 namespace GeolettApi.Web.Controllers
 {
     [Route("Authzinfo")]
+    [ApiExplorerSettings(GroupName = "internal")]
     [ApiController]
     public class UserController : BaseController
     {

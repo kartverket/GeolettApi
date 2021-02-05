@@ -58,7 +58,8 @@ namespace GeolettApi.Web
 
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = "GeolettApi.Web", Version = "v1" });
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Geolett api", Version = "v1" });
+                options.SwaggerDoc("internal", new OpenApiInfo { Title = "Geolett internal api", Version = "internal" });
 
                 options.SchemaFilter<SwaggerExcludePropertySchemaFilter>();
 
@@ -168,7 +169,9 @@ namespace GeolettApi.Web
             app.UseSwaggerUI(options =>
             {
                 var url = $"{(!Debugger.IsAttached ? "/api" : "")}/swagger/v1/swagger.json";
-                options.SwaggerEndpoint(url, "GeolettApi.Web v1");
+                options.SwaggerEndpoint(url, "Geolett api v1");
+                url = $"{(!Debugger.IsAttached ? "/api" : "")}/swagger/internal/swagger.json";
+                options.SwaggerEndpoint(url, "Geolett api internal v1");
             });
 
             app.UseHttpsRedirection();
