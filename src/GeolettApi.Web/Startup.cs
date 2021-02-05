@@ -28,6 +28,7 @@ using Serilog;
 using System.Collections.Generic;
 using GeolettApi.Infrastructure.DataModel;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace GeolettApi.Web
 {
@@ -149,7 +150,7 @@ namespace GeolettApi.Web
 
             app.UseSwaggerUI(options =>
             {
-                var url = $"{(!env.IsLocal() ? "/api" : "")}/swagger/v1/swagger.json";
+                var url = $"{(!Debugger.IsAttached ? "/api" : "")}/swagger/v1/swagger.json";
                 options.SwaggerEndpoint(url, "GeolettApi.Web v1");
             });
 
