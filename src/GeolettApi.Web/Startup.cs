@@ -170,7 +170,7 @@ namespace GeolettApi.Web
             {
                 var url = $"{(!Debugger.IsAttached ? "/geolett/api" : "")}/swagger/v1/swagger.json";
                 options.SwaggerEndpoint(url, "Geolett api v1");
-                url = $"{(!Debugger.IsAttached ? "/api" : "")}/swagger/internal/swagger.json";
+                url = $"{(!Debugger.IsAttached ? "/geolett/api" : "")}/swagger/internal/swagger.json";
                 options.SwaggerEndpoint(url, "Geolett api internal v1");
             });
 
