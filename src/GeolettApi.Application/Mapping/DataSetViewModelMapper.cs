@@ -3,12 +3,12 @@ using GeolettApi.Domain.Models;
 
 namespace GeolettApi.Application.Mapping
 {
-    public class DataSetViewModelMapper : IViewModelMapper<DataSet, DataSetViewModel>
+    public class DataSetViewModelMapper : IViewModelMapper<DataSet, DataSetViewModel, Geolett>
     {
-        private readonly IViewModelMapper<ObjectType, ObjectTypeViewModel> _objectTypeViewModelMapper;
+        private readonly IViewModelMapper<ObjectType, ObjectTypeViewModel,Geolett> _objectTypeViewModelMapper;
 
         public DataSetViewModelMapper(
-            IViewModelMapper<ObjectType, ObjectTypeViewModel> objectTypeViewModelMapper)
+            IViewModelMapper<ObjectType, ObjectTypeViewModel,Geolett> objectTypeViewModelMapper)
         {
             _objectTypeViewModelMapper = objectTypeViewModelMapper;
         }
@@ -29,6 +29,11 @@ namespace GeolettApi.Application.Mapping
                 Namespace = viewModel.Namespace,
                 TypeReference = _objectTypeViewModelMapper.MapToDomainModel(viewModel.TypeReference)
             };
+        }
+
+        public Geolett MapToGeolett(RegisterItem registerItem)
+        {
+            throw new System.NotImplementedException();
         }
 
         public DataSetViewModel MapToViewModel(DataSet domainModel)

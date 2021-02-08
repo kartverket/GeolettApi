@@ -27,7 +27,7 @@ namespace Geonorge.TiltaksplanApi.Web.Controllers
         {
             try
             {
-                var viewModels = await _dataSetQuery.GetAllAsync();
+                var viewModels = await _dataSetQuery.GetAllInternalAsync();
 
                 return Ok(viewModels);
             }

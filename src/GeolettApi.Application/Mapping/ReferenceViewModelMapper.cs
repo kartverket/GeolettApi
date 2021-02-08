@@ -3,12 +3,12 @@ using GeolettApi.Domain.Models;
 
 namespace GeolettApi.Application.Mapping
 {
-    public class ReferenceViewModelMapper : IViewModelMapper<Reference, ReferenceViewModel>
+    public class ReferenceViewModelMapper : IViewModelMapper<Reference, ReferenceViewModel,Geolett>
     {
-        private readonly IViewModelMapper<Link, LinkViewModel> _linkViewModelMapper;
+        private readonly IViewModelMapper<Link, LinkViewModel,Geolett> _linkViewModelMapper;
 
         public ReferenceViewModelMapper(
-            IViewModelMapper<Link, LinkViewModel> linkViewModelMapper)
+            IViewModelMapper<Link, LinkViewModel,Geolett> linkViewModelMapper)
         {
             _linkViewModelMapper = linkViewModelMapper;
         }
@@ -26,6 +26,11 @@ namespace GeolettApi.Application.Mapping
                 OtherLaw = _linkViewModelMapper.MapToDomainModel(viewModel.OtherLaw),
                 CircularFromMinistry = _linkViewModelMapper.MapToDomainModel(viewModel.CircularFromMinistry)
             };
+        }
+
+        public Geolett MapToGeolett(RegisterItem registerItem)
+        {
+            throw new System.NotImplementedException();
         }
 
         public ReferenceViewModel MapToViewModel(Reference domainModel)

@@ -133,12 +133,12 @@ namespace GeolettApi.Web
             services.AddScoped<IRepository<RegisterItem, int>, RegisterItemRepository>();
 
             // Mappers
-            services.AddTransient<IViewModelMapper<RegisterItem, RegisterItemViewModel>, RegisterItemViewModelMapper>();
-            services.AddTransient<IViewModelMapper<DataSet, DataSetViewModel>, DataSetViewModelMapper>();
-            services.AddTransient<IViewModelMapper<Reference, ReferenceViewModel>, ReferenceViewModelMapper>();
-            services.AddTransient<IViewModelMapper<ObjectType, ObjectTypeViewModel>, ObjectTypeViewModelMapper>();
-            services.AddTransient<IViewModelMapper<Link, LinkViewModel>, LinkViewModelMapper>();
-            services.AddTransient<IViewModelMapper<RegisterItemLink, RegisterItemLinkViewModel>, RegisterItemLinkViewModelMapper>();
+            services.AddTransient<IViewModelMapper<RegisterItem, RegisterItemViewModel, Geolett>, RegisterItemViewModelMapper>();
+            services.AddTransient<IViewModelMapper<DataSet, DataSetViewModel, Geolett>, DataSetViewModelMapper>();
+            services.AddTransient<IViewModelMapper<Reference, ReferenceViewModel, Geolett>, ReferenceViewModelMapper>();
+            services.AddTransient<IViewModelMapper<ObjectType, ObjectTypeViewModel, Geolett>, ObjectTypeViewModelMapper>();
+            services.AddTransient<IViewModelMapper<Link, LinkViewModel, Geolett>, LinkViewModelMapper>();
+            services.AddTransient<IViewModelMapper<RegisterItemLink, RegisterItemLinkViewModel, Geolett>, RegisterItemLinkViewModelMapper>();
             
             // Configuration
             services.Configure<GeoIDConfiguration>(Configuration.GetSection(GeoIDConfiguration.SectionName));

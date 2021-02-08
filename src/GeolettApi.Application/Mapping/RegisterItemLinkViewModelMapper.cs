@@ -3,12 +3,12 @@ using GeolettApi.Domain.Models;
 
 namespace GeolettApi.Application.Mapping
 {
-    public class RegisterItemLinkViewModelMapper : IViewModelMapper<RegisterItemLink, RegisterItemLinkViewModel>
+    public class RegisterItemLinkViewModelMapper : IViewModelMapper<RegisterItemLink, RegisterItemLinkViewModel,Geolett>
     {
-        private readonly IViewModelMapper<Link, LinkViewModel> _linkViewModelMapper;
+        private readonly IViewModelMapper<Link, LinkViewModel,Geolett> _linkViewModelMapper;
 
         public RegisterItemLinkViewModelMapper(
-            IViewModelMapper<Link, LinkViewModel> linkViewModelMapper)
+            IViewModelMapper<Link, LinkViewModel,Geolett> linkViewModelMapper)
         {
             _linkViewModelMapper = linkViewModelMapper;
         }
@@ -24,6 +24,11 @@ namespace GeolettApi.Application.Mapping
                 RegisterItemId = viewModel.RegisterItemId,
                 Link = _linkViewModelMapper.MapToDomainModel(viewModel.Link)
             };
+        }
+
+        public Geolett MapToGeolett(RegisterItem registerItem)
+        {
+            throw new System.NotImplementedException();
         }
 
         public RegisterItemLinkViewModel MapToViewModel(RegisterItemLink domainModel)

@@ -3,7 +3,7 @@ using GeolettApi.Domain.Models;
 
 namespace GeolettApi.Application.Mapping
 {
-    public class LinkViewModelMapper : IViewModelMapper<Link, LinkViewModel>
+    public class LinkViewModelMapper : IViewModelMapper<Link, LinkViewModel,Geolett>
     {
         public Link MapToDomainModel(LinkViewModel viewModel)
         {
@@ -16,6 +16,11 @@ namespace GeolettApi.Application.Mapping
                 Text = viewModel.Text,
                 Url = viewModel.Url
             };
+        }
+
+        public Geolett MapToGeolett(RegisterItem registerItem)
+        {
+            throw new System.NotImplementedException();
         }
 
         public LinkViewModel MapToViewModel(Link domainModel)

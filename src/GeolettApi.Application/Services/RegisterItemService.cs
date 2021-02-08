@@ -16,14 +16,14 @@ namespace GeolettApi.Application.Services
     {
         private readonly IUnitOfWorkManager _uowManager;
         private readonly IRepository<RegisterItem, int> _registerItemRepository;
-        private readonly IViewModelMapper<RegisterItem, RegisterItemViewModel> _registerItemViewModelMapper;
+        private readonly IViewModelMapper<RegisterItem, RegisterItemViewModel, Geolett> _registerItemViewModelMapper;
         private readonly IAuthorizationService _authorizationService;
         private readonly IValidator<RegisterItem> _registerItemValidator;
 
         public RegisterItemService(
             IUnitOfWorkManager uowManager,
             IRepository<RegisterItem, int> registerItemRepository,
-            IViewModelMapper<RegisterItem, RegisterItemViewModel> registerItemViewModelMapper,
+            IViewModelMapper<RegisterItem, RegisterItemViewModel, Geolett> registerItemViewModelMapper,
             IAuthorizationService authorizationService,
             IValidator<RegisterItem> registerItemValidator)
         {

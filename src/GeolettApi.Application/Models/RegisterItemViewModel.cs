@@ -11,10 +11,6 @@ namespace GeolettApi.Application.Models
         public string Description { get; set; }
         public List<RegisterItemLinkViewModel> Links { get; set; }
         public string DialogText { get; set; }
-        /// <summary>
-        /// Denne teksten skal fungere som en hjelp til søkeren til å komme videre i prosessen
-        /// </summary>
-        /// <example>Tiltaket kan plasseres 15m eller lengre fra stammen. Dersom tiltaket må plasseres nærmere enn 15m fra stammen, skal kommunen vurdere om du kan få tillatelse til tiltaket slik du har søkt om, i henhold til bestemmelsene i naturmangfoldloven. Rotsystemet på treet må ikke skades. En arborist kan vurdere det for deg. Gi en begrunnelse for behovet og legg ved en eventuell uttalelse fra arborist.</example>
         public string PossibleMeasures { get; set; }
         public string Guidance { get; set; }
         public DataSetViewModel DataSet { get; set; }

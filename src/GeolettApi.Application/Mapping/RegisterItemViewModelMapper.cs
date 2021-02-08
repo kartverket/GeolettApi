@@ -3,16 +3,16 @@ using GeolettApi.Domain.Models;
 
 namespace GeolettApi.Application.Mapping
 {
-    public class RegisterItemViewModelMapper : IViewModelMapper<RegisterItem, RegisterItemViewModel>
+    public class RegisterItemViewModelMapper : IViewModelMapper<RegisterItem, RegisterItemViewModel,Geolett>
     {
-        private readonly IViewModelMapper<DataSet, DataSetViewModel> _dataSetViewModelMapper;
-        private readonly IViewModelMapper<Reference, ReferenceViewModel> _referenceViewModelMapper;
-        private readonly IViewModelMapper<RegisterItemLink, RegisterItemLinkViewModel> _registerItemlinkViewModelMapper;
+        private readonly IViewModelMapper<DataSet, DataSetViewModel,Geolett> _dataSetViewModelMapper;
+        private readonly IViewModelMapper<Reference, ReferenceViewModel, Geolett> _referenceViewModelMapper;
+        private readonly IViewModelMapper<RegisterItemLink, RegisterItemLinkViewModel, Geolett> _registerItemlinkViewModelMapper;
 
         public RegisterItemViewModelMapper(
-            IViewModelMapper<DataSet, DataSetViewModel> dataSetViewModelMapper,
-            IViewModelMapper<Reference, ReferenceViewModel> referenceViewModelMapper,
-            IViewModelMapper<RegisterItemLink, RegisterItemLinkViewModel> registerItemlinkViewModelMapper)
+            IViewModelMapper<DataSet, DataSetViewModel, Geolett> dataSetViewModelMapper,
+            IViewModelMapper<Reference, ReferenceViewModel, Geolett> referenceViewModelMapper,
+            IViewModelMapper<RegisterItemLink, RegisterItemLinkViewModel, Geolett> registerItemlinkViewModelMapper)
         {
             _dataSetViewModelMapper = dataSetViewModelMapper;
             _referenceViewModelMapper = referenceViewModelMapper;
@@ -73,6 +73,33 @@ namespace GeolettApi.Application.Mapping
                 Sign5 = domainModel.Sign5,
                 Sign6 = domainModel.Sign6,
                 LastUpdated = domainModel.LastUpdated                
+            };
+        }
+        public Geolett MapToGeolett(RegisterItem domainModel)
+        {
+            if (domainModel == null)
+                return null;
+
+            return new Geolett
+            {
+                KontekstType = domainModel.ContextType,
+                Tittel = domainModel.Title,
+                ForklarendeTekst = domainModel.Description,
+                //Lenker = domainModel.Links?.ConvertAll(link => _registerItemlinkViewModelMapper.MapToViewModel(link)),
+                Dialogtekst = domainModel.DialogText,
+                MuligeTiltak = domainModel.PossibleMeasures,
+                Veiledning = domainModel.Guidance,
+                //Datasett = _dataSetViewModelMapper.MapToViewModel(domainModel.DataSet),
+                //Referanse = _referenceViewModelMapper.MapToViewModel(domainModel.Reference),
+                TekniskKommentar = domainModel.TechnicalComment,
+                AnnenKommentar = domainModel.OtherComment,
+                Tegn1 = domainModel.Sign1,
+                Tegn2 = domainModel.Sign2,
+                Tegn3 = domainModel.Sign3,
+                Tegn4 = domainModel.Sign4,
+                Tegn5 = domainModel.Sign5,
+                Tegn6 = domainModel.Sign6,
+                //LastUpdated = domainModel.LastUpdated
             };
         }
     }

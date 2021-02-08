@@ -1,0 +1,120 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GeolettApi.Application.Models
+{
+    /// <summary>
+    /// Geolett
+    /// </summary>
+    public class Geolett
+    {
+        /// <summary>
+        /// kodeliste - åpen
+        /// </summary>
+        public string KontekstType { get; set; }
+        /// <summary>
+        /// Identifikasjonsnummer for tekstene
+        /// </summary>
+        public string ID { get; set; }
+        /// <summary>
+        /// Overskrift
+        /// </summary>
+        public string Tittel { get; set; }
+        /// <summary>
+        /// En begrunnelse for hvorfor søker gjøres oppmerksom på forholdet
+        /// </summary>
+        public string ForklarendeTekst { get; set; }
+        /// <summary>
+        /// Lenker om det er ønskelig å lenke til mer utfyllende informasjon
+        /// </summary>
+        public List<Lenke> Lenker { get; set; }
+        public string Dialogtekst { get; set; }
+        /// <summary>
+        /// Denne teksten skal fungere som en hjelp til søkeren til å komme videre i prosessen
+        /// </summary>
+        /// <example>Tiltaket kan plasseres 15m eller lengre fra stammen. Dersom tiltaket må plasseres nærmere enn 15m fra stammen, skal kommunen vurdere om du kan få tillatelse til tiltaket slik du har søkt om, i henhold til bestemmelsene i naturmangfoldloven. Rotsystemet på treet må ikke skades. En arborist kan vurdere det for deg. Gi en begrunnelse for behovet og legg ved en eventuell uttalelse fra arborist.</example>
+        public string MuligeTiltak { get; set; }
+        /// <summary>
+        /// Veiledende tekst om ett eller flere av de mulige tiltakene
+        /// </summary>
+        public string Veiledning { get; set; }
+        public Datasett Datasett { get; set; }
+        public Referanse Referanse { get; set; }
+        public string TekniskKommentar { get; set; }
+        public string AnnenKommentar { get; set; }
+        public string Tegn1 { get; set; }
+        public string Tegn2 { get; set; }
+        public string Tegn3 { get; set; }
+        public string Tegn4 { get; set; }
+        public string Tegn5 { get; set; }
+        public string Tegn6 { get; set; }
+
+    }
+
+    public class Referanse
+    {
+        public string Tittel { get; set; }
+        /// <summary>
+        /// Byggesaksforskrifter, lenke
+        /// </summary>
+        public Lenke Tek17 { get; set; }
+        public Lenke AnnenLov { get; set; }
+        public Lenke RundskrivFraDep { get; set; }
+    }
+
+    public class Datasett
+    {
+        /// <summary>
+        /// Hvilket datasett tekstene er knyttet til
+        /// </summary>
+        public string Tittel { get; set; }
+        /// <summary>
+        /// Url til metadata om datasettet
+        /// </summary>
+        public string UrlMetadata { get; set; }
+        /// <summary>
+        /// Buffer avstand i meter
+        /// </summary>
+        public int? BufferAvstand { get; set; }
+        /// <summary>
+        ///Generell tekst som sier at en må ta spesielle hensyn siden en er i nærheten av et område som krever særskilte hensyn
+        /// </summary>
+        public string BufferText { get; set; }
+        /// <summary>
+        /// Url til gml-skjema
+        /// </summary>
+        public string GmlSkjema { get; set; }
+        /// <summary>
+        /// Navnerom for datasett (target namespace)
+        /// </summary>
+        public string Navnerom { get; set; }
+        /// <summary>
+        /// Objekttype, attributt og datasett skal sammen med type tiltak...
+        /// </summary>
+        public ObjektType TypeReferanse { get; set; }
+    }
+    public class ObjektType
+    {
+        /// <summary>
+        /// Flomsone
+        /// </summary>
+        public string Objekttype { get; set; }
+        /// <summary>
+        /// Sannsynlighet
+        /// </summary>
+        public string Attributt { get; set; }
+        /// <summary>
+        /// 200
+        /// </summary>
+        public string Kodeverdi { get; set; }
+
+    }
+    public class Lenke
+    {
+        public string Href { get; set; }
+        public string Tittel { get; set; }
+    }
+}

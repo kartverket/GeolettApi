@@ -27,14 +27,16 @@ namespace Geonorge.TiltaksplanApi.Web.Controllers
             _registerItemQuery = registerItemQuery;
         }
 
+
+
         [HttpGet]
-        [ApiExplorerSettings(GroupName = "v1")]
+        [ApiExplorerSettings(GroupName = "intern")]
         [ProducesResponseType(typeof(List<RegisterItemViewModel>), 200)]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAllInternal()
         {
             try
             {
-                var viewModels = await _registerItemQuery.GetAllAsync();
+                var viewModels = await _registerItemQuery.GetAllInternalAsync();
 
                 return Ok(viewModels);
             }
