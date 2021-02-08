@@ -168,7 +168,7 @@ namespace GeolettApi.Web
 
             app.UseSwaggerUI(options =>
             {
-                var url = $"{(!Debugger.IsAttached ? "/api" : "")}/swagger/v1/swagger.json";
+                var url = $"{(!Debugger.IsAttached ? "/geolett/api" : "")}/swagger/v1/swagger.json";
                 options.SwaggerEndpoint(url, "Geolett api v1");
                 url = $"{(!Debugger.IsAttached ? "/api" : "")}/swagger/internal/swagger.json";
                 options.SwaggerEndpoint(url, "Geolett api internal v1");
