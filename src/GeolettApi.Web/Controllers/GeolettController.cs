@@ -12,7 +12,8 @@ using System.Threading.Tasks;
 namespace Geonorge.TiltaksplanApi.Web.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("")]
+    [Route("geolett")]
     public class GeolettController : BaseController
     {
         private readonly IRegisterItemService _registerItemService;
