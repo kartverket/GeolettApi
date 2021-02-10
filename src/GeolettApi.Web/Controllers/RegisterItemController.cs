@@ -30,7 +30,7 @@ namespace Geonorge.TiltaksplanApi.Web.Controllers
 
 
         [HttpGet]
-        [ApiExplorerSettings(GroupName = "intern")]
+        [ApiExplorerSettings(GroupName = "internal")]
         [ProducesResponseType(typeof(List<RegisterItemViewModel>), 200)]
         public async Task<IActionResult> GetAllInternal()
         {
