@@ -24,6 +24,21 @@ namespace GeolettApi.Application.Mapping
             throw new System.NotImplementedException();
         }
 
+        public Lenke MapToGeolett(RegisterItemLink link)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Geolett MapToGeolett(LinkViewModel link)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Datasett MapToGeolett(DataSet datasett)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public ObjectTypeViewModel MapToViewModel(ObjectType domainModel)
         {
             if (domainModel == null)
@@ -36,6 +51,24 @@ namespace GeolettApi.Application.Mapping
                 CodeValue = domainModel.CodeValue,
                 Attribute = domainModel.Attribute
             };
+        }
+
+        public ObjektType MapToGeolett(ObjectType domainModel)
+        {
+            if (domainModel == null)
+                return null;
+
+            return new ObjektType
+            {
+                Objekttype = domainModel.Type,
+                Kodeverdi = domainModel.CodeValue,
+                Attributt = domainModel.Attribute
+            };
+        }
+
+        public Referanse MapToGeolett(Reference reference)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

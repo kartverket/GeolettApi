@@ -26,7 +26,40 @@ namespace GeolettApi.Application.Mapping
             };
         }
 
+        public Geolett MapToGeolett(RegisterItemLinkViewModel viewModel)
+        {
+            if (viewModel == null)
+                return null;
+
+            return _linkViewModelMapper.MapToGeolett(viewModel.Link);
+        }
+
         public Geolett MapToGeolett(RegisterItem registerItem)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Lenke MapToGeolett(RegisterItemLink link)
+        {
+            return new Lenke { Href = link.Link.Url, Tittel = link.Link.Text };
+        }
+
+        public Lenke MapToGeolett(LinkViewModel link)
+        {
+            return new Lenke();
+        }
+
+        public Datasett MapToGeolett(DataSet datasett)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public ObjektType MapToGeolett(ObjectType typeReference)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Referanse MapToGeolett(Reference reference)
         {
             throw new System.NotImplementedException();
         }
@@ -42,6 +75,11 @@ namespace GeolettApi.Application.Mapping
                 RegisterItemId = domainModel.RegisterItemId,
                 Link = _linkViewModelMapper.MapToViewModel(domainModel.Link)
             };
+        }
+
+        Geolett IViewModelMapper<RegisterItemLink, RegisterItemLinkViewModel, Geolett>.MapToGeolett(LinkViewModel link)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

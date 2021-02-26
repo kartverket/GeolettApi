@@ -9,5 +9,10 @@ namespace GeolettApi.Application.Mapping
         TDomainModel MapToDomainModel(TViewModel viewModel);
         TViewModel MapToViewModel(TDomainModel domainModel);
         TGeolett MapToGeolett(RegisterItem registerItem);
+        Datasett MapToGeolett(DataSet datasett);
+        Lenke MapToGeolett(RegisterItemLink link);
+        Geolett MapToGeolett(LinkViewModel link);
+        ObjektType MapToGeolett(ObjectType typeReference);
+        Referanse MapToGeolett(Reference reference);
     }
 }

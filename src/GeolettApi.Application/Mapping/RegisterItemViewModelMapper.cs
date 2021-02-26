@@ -85,12 +85,12 @@ namespace GeolettApi.Application.Mapping
                 KontekstType = domainModel.ContextType,
                 Tittel = domainModel.Title,
                 ForklarendeTekst = domainModel.Description,
-                //Lenker = domainModel.Links?.ConvertAll(link => _registerItemlinkViewModelMapper.MapToViewModel(link)),
+                Lenker = domainModel.Links?.ConvertAll(link => _registerItemlinkViewModelMapper.MapToGeolett(link)),
                 Dialogtekst = domainModel.DialogText,
                 MuligeTiltak = domainModel.PossibleMeasures,
                 Veiledning = domainModel.Guidance,
-                //Datasett = _dataSetViewModelMapper.MapToViewModel(domainModel.DataSet),
-                //Referanse = _referenceViewModelMapper.MapToViewModel(domainModel.Reference),
+                Datasett = _dataSetViewModelMapper.MapToGeolett(domainModel.DataSet),
+                Referanse = _referenceViewModelMapper.MapToGeolett(domainModel.Reference),
                 TekniskKommentar = domainModel.TechnicalComment,
                 AnnenKommentar = domainModel.OtherComment,
                 Tegn1 = domainModel.Sign1,
@@ -98,9 +98,33 @@ namespace GeolettApi.Application.Mapping
                 Tegn3 = domainModel.Sign3,
                 Tegn4 = domainModel.Sign4,
                 Tegn5 = domainModel.Sign5,
-                Tegn6 = domainModel.Sign6,
-                //LastUpdated = domainModel.LastUpdated
+                Tegn6 = domainModel.Sign6
             };
+        }
+
+        public Lenke MapToGeolett(RegisterItemLink link)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Geolett MapToGeolett(LinkViewModel link)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Datasett MapToGeolett(DataSet datasett)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public ObjektType MapToGeolett(ObjectType typeReference)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Referanse MapToGeolett(Reference reference)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

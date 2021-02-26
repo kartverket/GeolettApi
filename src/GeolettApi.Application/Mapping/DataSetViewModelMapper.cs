@@ -36,6 +36,16 @@ namespace GeolettApi.Application.Mapping
             throw new System.NotImplementedException();
         }
 
+        public Lenke MapToGeolett(RegisterItemLink link)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Geolett MapToGeolett(LinkViewModel link)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public DataSetViewModel MapToViewModel(DataSet domainModel)
         {
             if (domainModel == null)
@@ -52,6 +62,34 @@ namespace GeolettApi.Application.Mapping
                 Namespace = domainModel.Namespace,
                 TypeReference = _objectTypeViewModelMapper.MapToViewModel(domainModel.TypeReference)
             };
+        }
+
+        public Datasett MapToGeolett(DataSet domainModel)
+        {
+            if (domainModel == null)
+                return null;
+
+            return new Datasett
+            {
+                //Id = domainModel.Id, Todo create field with guid datatype ex uuid as Guid
+                Tittel = domainModel.Title,
+                UrlMetadata = domainModel.UrlMetadata,
+                BufferAvstand = domainModel.BufferDistance,
+                BufferText = domainModel.BufferText,
+                GmlSkjema = domainModel.UrlGmlSchema,
+                Navnerom = domainModel.Namespace,
+                TypeReferanse = _objectTypeViewModelMapper.MapToGeolett(domainModel.TypeReference)
+            };
+        }
+
+        public ObjektType MapToGeolett(ObjectType typeReference)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Referanse MapToGeolett(Reference reference)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

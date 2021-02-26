@@ -13,7 +13,6 @@ namespace Geonorge.TiltaksplanApi.Web.Controllers
 {
     [ApiController]
     [Route("")]
-    [Route("geolett")]
     public class GeolettController : BaseController
     {
         private readonly IRegisterItemService _registerItemService;

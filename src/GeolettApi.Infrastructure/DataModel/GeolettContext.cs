@@ -35,5 +35,8 @@ namespace GeolettApi.Infrastructure.DataModel
 
             base.OnModelCreating(builder);
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder.LogTo(System.Console.WriteLine);
     }
 }

@@ -23,6 +23,31 @@ namespace GeolettApi.Application.Mapping
             throw new System.NotImplementedException();
         }
 
+        public Lenke MapToGeolett(RegisterItemLink link)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Geolett MapToGeolett(LinkViewModel link)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Datasett MapToGeolett(DataSet datasett)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public ObjektType MapToGeolett(ObjectType typeReference)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Referanse MapToGeolett(Reference reference)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public LinkViewModel MapToViewModel(Link domainModel)
         {
             if (domainModel == null)
