@@ -1,5 +1,7 @@
 ﻿using GeolettApi.Application.Models;
 using GeolettApi.Domain.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace GeolettApi.Application.Mapping
 {
@@ -80,12 +82,24 @@ namespace GeolettApi.Application.Mapping
             if (domainModel == null)
                 return null;
 
+            var excludedLinks = new List<int>();
+            if(domainModel.Reference != null) 
+            {
+                if (domainModel.Reference.OtherLawId.HasValue)
+                    excludedLinks.Add(domainModel.Reference.OtherLawId.Value);
+                if (domainModel.Reference.Tek17Id.HasValue)
+                    excludedLinks.Add(domainModel.Reference.Tek17Id.Value);
+                if (domainModel.Reference.CircularFromMinistryId.HasValue)
+                    excludedLinks.Add(domainModel.Reference.CircularFromMinistryId.Value);
+            }
+
             return new Geolett
             {
+                //ID = domainModel.Id, todo add uuid as Guid
                 KontekstType = domainModel.ContextType,
                 Tittel = domainModel.Title,
                 ForklarendeTekst = domainModel.Description,
-                Lenker = domainModel.Links?.ConvertAll(link => _registerItemlinkViewModelMapper.MapToGeolett(link)),
+                Lenker = domainModel.Links.Where(e => !excludedLinks.Contains(e.Id)).ToList()?.ConvertAll(link => _registerItemlinkViewModelMapper.MapToGeolett(link)),
                 Dialogtekst = domainModel.DialogText,
                 MuligeTiltak = domainModel.PossibleMeasures,
                 Veiledning = domainModel.Guidance,

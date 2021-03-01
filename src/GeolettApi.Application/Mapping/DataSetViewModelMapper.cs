@@ -71,7 +71,6 @@ namespace GeolettApi.Application.Mapping
 
             return new Datasett
             {
-                //Id = domainModel.Id, Todo create field with guid datatype ex uuid as Guid
                 Tittel = domainModel.Title,
                 UrlMetadata = domainModel.UrlMetadata,
                 BufferAvstand = domainModel.BufferDistance,
