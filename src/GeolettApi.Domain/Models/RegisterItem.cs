@@ -6,6 +6,7 @@ namespace GeolettApi.Domain.Models
     public class RegisterItem : EntityBase
     {
         public string ContextType { get; set; }
+        public Guid Uuid { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public List<RegisterItemLink> Links { get; set; }

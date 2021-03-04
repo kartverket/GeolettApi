@@ -36,6 +36,9 @@ namespace GeolettApi.Infrastructure.DataModel.EntityConfiguration
                 .HasForeignKey(registerItemLink => registerItemLink.RegisterItemId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder
+                .Property(x => x.Uuid).HasDefaultValueSql("NEWID()");
         }
     }
 }

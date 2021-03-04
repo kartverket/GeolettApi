@@ -95,7 +95,7 @@ namespace GeolettApi.Application.Mapping
 
             return new Geolett
             {
-                //ID = domainModel.Id, todo add uuid as Guid
+                ID = domainModel.Uuid.ToString(),
                 KontekstType = domainModel.ContextType,
                 Tittel = domainModel.Title,
                 ForklarendeTekst = domainModel.Description,
