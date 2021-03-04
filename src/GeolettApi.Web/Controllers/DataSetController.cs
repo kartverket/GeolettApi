@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Geonorge.TiltaksplanApi.Web.Controllers
 {
     [ApiController]
-    [ApiExplorerSettings(GroupName = "internal")]
+    [ApiExplorerSettings(GroupName = "internal", IgnoreApi = true)]
     [Route("[controller]")]
     public class DataSetController : BaseController
     {
