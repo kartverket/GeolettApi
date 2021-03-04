@@ -32,6 +32,7 @@ namespace GeolettApi.Application.Mapping
             return new RegisterItem
             {
                 Id = viewModel.Id,
+                OwnerId = viewModel.Owner?.Id ?? 0,
                 ContextType = viewModel.ContextType,
                 Title = viewModel.Title,
                 Description = viewModel.Description,
