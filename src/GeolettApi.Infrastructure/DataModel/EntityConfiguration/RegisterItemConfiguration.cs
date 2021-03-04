@@ -39,6 +39,13 @@ namespace GeolettApi.Infrastructure.DataModel.EntityConfiguration
 
             builder
                 .Property(x => x.Uuid).HasDefaultValueSql("NEWID()");
+
+            builder
+                .HasOne(register => register.Owner)
+                .WithMany()
+                .HasForeignKey(register => register.OwnerId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

@@ -10,15 +10,18 @@ namespace GeolettApi.Application.Mapping
         private readonly IViewModelMapper<DataSet, DataSetViewModel,Geolett> _dataSetViewModelMapper;
         private readonly IViewModelMapper<Reference, ReferenceViewModel, Geolett> _referenceViewModelMapper;
         private readonly IViewModelMapper<RegisterItemLink, RegisterItemLinkViewModel, Geolett> _registerItemlinkViewModelMapper;
+        private readonly IViewModelMapper<Organization, OrganizationViewModel, Geolett> _organizationViewModelMapper;
 
         public RegisterItemViewModelMapper(
             IViewModelMapper<DataSet, DataSetViewModel, Geolett> dataSetViewModelMapper,
             IViewModelMapper<Reference, ReferenceViewModel, Geolett> referenceViewModelMapper,
-            IViewModelMapper<RegisterItemLink, RegisterItemLinkViewModel, Geolett> registerItemlinkViewModelMapper)
+            IViewModelMapper<RegisterItemLink, RegisterItemLinkViewModel, Geolett> registerItemlinkViewModelMapper,
+            IViewModelMapper<Organization, OrganizationViewModel, Geolett> organizationViewModelMapper)
         {
             _dataSetViewModelMapper = dataSetViewModelMapper;
             _referenceViewModelMapper = referenceViewModelMapper;
             _registerItemlinkViewModelMapper = registerItemlinkViewModelMapper;
+            _organizationViewModelMapper = organizationViewModelMapper;
         }
 
         public RegisterItem MapToDomainModel(RegisterItemViewModel viewModel)
@@ -57,6 +60,7 @@ namespace GeolettApi.Application.Mapping
             return new RegisterItemViewModel
             {
                 Id = domainModel.Id,
+                Owner = _organizationViewModelMapper.MapToViewModel(domainModel.Owner),
                 ContextType = domainModel.ContextType,
                 Title = domainModel.Title,
                 Description = domainModel.Description,

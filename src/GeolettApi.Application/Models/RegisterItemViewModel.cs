@@ -6,6 +6,7 @@ namespace GeolettApi.Application.Models
     public class RegisterItemViewModel
     {
         public int Id { get; set; }
+        public OrganizationViewModel Owner { get; set; }
         public string ContextType { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }

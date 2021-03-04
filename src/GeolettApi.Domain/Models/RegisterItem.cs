@@ -7,6 +7,8 @@ namespace GeolettApi.Domain.Models
     {
         public string ContextType { get; set; }
         public Guid Uuid { get; set; }
+        public int OwnerId { get; set; }
+        public Organization Owner { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public List<RegisterItemLink> Links { get; set; }
@@ -78,6 +80,9 @@ namespace GeolettApi.Domain.Models
 
             if (Sign6 != updated.Sign6)
                 Sign6 = updated.Sign6;
+
+            if (OwnerId != updated.OwnerId)
+                OwnerId = updated.OwnerId;
         }
     }
 }

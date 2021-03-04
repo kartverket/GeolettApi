@@ -24,6 +24,7 @@ namespace GeolettApi.Application.Queries
         public async Task<List<RegisterItemViewModel>> GetAllInternalAsync()
         {
             var registerItems = await _context.RegisterItems
+                .Include(organization => organization.Owner)
                 .Include(registerItem => registerItem.DataSet)
                     .ThenInclude(dataSet => dataSet.TypeReference)
                 .Include(registerItem => registerItem.Reference)

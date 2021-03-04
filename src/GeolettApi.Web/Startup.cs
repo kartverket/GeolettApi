@@ -33,6 +33,7 @@ using System.IO;
 using System.Reflection;
 using System;
 using System.Linq;
+using GeolettApi.Application.Configuration;
 
 namespace GeolettApi.Web
 {
@@ -139,7 +140,7 @@ namespace GeolettApi.Web
             services.AddTransient<IViewModelMapper<ObjectType, ObjectTypeViewModel, Geolett>, ObjectTypeViewModelMapper>();
             services.AddTransient<IViewModelMapper<Link, LinkViewModel, Geolett>, LinkViewModelMapper>();
             services.AddTransient<IViewModelMapper<RegisterItemLink, RegisterItemLinkViewModel, Geolett>, RegisterItemLinkViewModelMapper>();
-            
+            services.AddTransient<IViewModelMapper<Organization, OrganizationViewModel,Geolett>, OrganizationViewModelMapper>();
             // Configuration
             services.Configure<GeoIDConfiguration>(Configuration.GetSection(GeoIDConfiguration.SectionName));
         }
@@ -196,6 +197,9 @@ namespace GeolettApi.Web
             using var context = serviceScope.ServiceProvider.GetService<GeolettContext>();
 
             context.Database.Migrate();
+
+            var apiUrls = Configuration.GetSection(ApiUrlsConfiguration.SectionName).Get<ApiUrlsConfiguration>();
+            DataSeeder.SeedOrganizations(context, apiUrls.Organizations);
         }
     }
 }
