@@ -129,6 +129,7 @@ namespace GeolettApi.Web
             // Queries
             services.AddTransient<IAsyncQuery<RegisterItemViewModel>, RegisterItemQuery>();
             services.AddTransient<IAsyncQuery<DataSetViewModel>, DataSetQuery>();
+            services.AddTransient<IOrganizationQuery, OrganizationQuery>();
 
             // Repositories
             services.AddScoped<IRepository<RegisterItem, int>, RegisterItemRepository>();
