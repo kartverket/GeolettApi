@@ -29,8 +29,8 @@ namespace GeolettApi.Application.Services
         {
             return new SetupViewModel
             {
-                ApiUrls = _urlProvider.ApiUrls(),
-                Translations = GetTranslations()
+                ApiUrls = _urlProvider.ApiUrls()/*,
+                Translations = GetTranslations()*/
             };
         }
 
