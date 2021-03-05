@@ -70,6 +70,7 @@ namespace GeolettApi.Application.Queries
         public async Task<RegisterItemViewModel> GetByIdAsync(int id)
         {
             var registerItem = await _context.RegisterItems
+                .Include(registerItem => registerItem.Owner)
                 .Include(registerItem => registerItem.DataSet)
                     .ThenInclude(dataSet => dataSet.TypeReference)
                 .Include(registerItem => registerItem.Reference)
