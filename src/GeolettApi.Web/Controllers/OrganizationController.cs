@@ -25,9 +25,9 @@ namespace GeolettApi.Web.Controllers
         {
             try
             {
-                var participants = await _organizationQuery.GetAllAsync();
+                var owners = await _organizationQuery.GetAllAsync();
 
-                return Ok(participants);
+                return Ok(owners);
             }
             catch (Exception exception)
             {
