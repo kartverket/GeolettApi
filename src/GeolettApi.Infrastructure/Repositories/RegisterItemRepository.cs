@@ -27,6 +27,7 @@ namespace GeolettApi.Infrastructure.Repositories
         public async Task<RegisterItem> GetByIdAsync(int id)
         {
             return await GetAll()
+                .Include(registerItem => registerItem.Owner)
                 .Include(registerItem => registerItem.DataSet)
                     .ThenInclude(dataSet => dataSet.TypeReference)
                 .Include(registerItem => registerItem.Reference)
@@ -42,7 +43,9 @@ namespace GeolettApi.Infrastructure.Repositories
 
         public RegisterItem Create(RegisterItem registerItem)
         {
-            _context.RegisterItems.Add(registerItem);
+            var registerItemAdded = _context.RegisterItems.Add(registerItem);
+            var owner = _context.Organizations.Where(o => o.Id == registerItem.OwnerId).FirstOrDefault();
+            registerItem.Owner = owner;
 
             return registerItem;
         }
