@@ -48,5 +48,10 @@ namespace GeolettApi.Application.Queries
 
             return _dataSetViewModelMapper.MapToViewModel(dataSet);
         }
+
+        public Task<bool> HasOwnership(int id, long orgNumber)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

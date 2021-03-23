@@ -86,5 +86,18 @@ namespace GeolettApi.Application.Queries
 
             return _registerItemViewModelMapper.MapToViewModel(registerItem);
         }
+
+        public async Task<bool> HasOwnership(int id, long orgNumber)
+        {
+            var register = await _context.RegisterItems
+                .Include(owner => owner.Owner)
+                .AsNoTracking()
+                .SingleOrDefaultAsync(register => register.Id == id);
+
+            if (register == null)
+                return false;
+
+            return register.Owner.OrgNumber == orgNumber;
+        }
     }
 }

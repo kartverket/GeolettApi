@@ -52,7 +52,7 @@ namespace GeolettApi.Application.Services
 
         public async Task<RegisterItemViewModel> UpdateAsync(int id, RegisterItemViewModel viewModel)
         {
-            await _authorizationService.AuthorizeActivity(UserActivity.UpdateRegisterItem);
+            await _authorizationService.AuthorizeActivity(UserActivity.UpdateRegisterItem, id);
 
             var update = _registerItemViewModelMapper.MapToDomainModel(viewModel);
 
@@ -93,7 +93,7 @@ namespace GeolettApi.Application.Services
 
         public async Task<bool> DeleteAsync(int id)
         {
-            await _authorizationService.AuthorizeActivity(UserActivity.DeleteRegisterItem);
+            await _authorizationService.AuthorizeActivity(UserActivity.DeleteRegisterItem, id);
 
             using var uow = _uowManager.GetUnitOfWork();
 

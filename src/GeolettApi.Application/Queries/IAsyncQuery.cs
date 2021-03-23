@@ -9,5 +9,6 @@ namespace GeolettApi.Application.Queries
         Task<List<TViewModel>> GetAllInternalAsync();
         Task<TViewModel> GetByIdAsync(int id);
         Task<List<Geolett>> GetAllAsync();
+        Task<bool> HasOwnership(int id, long orgNumber);
     }
 }
