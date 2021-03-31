@@ -53,7 +53,7 @@ namespace GeolettApi.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors();
+            //services.AddCors();
 
             services.AddControllers().AddNewtonsoftJson();
 
