@@ -57,18 +57,22 @@ namespace GeolettApi.Application.Mapping
         {
             Referanse referanse = null;
 
-            if (reference.Tek17 != null || reference.OtherLaw != null || reference.CircularFromMinistry != null)
-                referanse = new Referanse { Tittel = reference.Title };
+            if(reference != null) 
+            { 
 
-            if (reference.Tek17 != null)
-                referanse.Tek17 = new Lenke { Href = reference.Tek17.Url, Tittel = reference.Tek17.Text };
+                if (reference.Tek17 != null || reference.OtherLaw != null || reference.CircularFromMinistry != null)
+                    referanse = new Referanse { Tittel = reference.Title };
 
-            if (reference.OtherLaw != null)
-                referanse.AnnenLov = new Lenke { Href = reference.OtherLaw.Url, Tittel = reference.OtherLaw.Text };
+                if (reference.Tek17 != null)
+                    referanse.Tek17 = new Lenke { Href = reference.Tek17.Url, Tittel = reference.Tek17.Text };
 
-            if (reference.CircularFromMinistry != null)
-                referanse.RundskrivFraDep = new Lenke { Href = reference.CircularFromMinistry.Url, Tittel = reference.CircularFromMinistry.Text };
+                if (reference.OtherLaw != null)
+                    referanse.AnnenLov = new Lenke { Href = reference.OtherLaw.Url, Tittel = reference.OtherLaw.Text };
 
+                if (reference.CircularFromMinistry != null)
+                    referanse.RundskrivFraDep = new Lenke { Href = reference.CircularFromMinistry.Url, Tittel = reference.CircularFromMinistry.Text };
+
+            }
 
             return referanse;
         }
