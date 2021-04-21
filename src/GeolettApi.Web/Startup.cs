@@ -49,6 +49,8 @@ namespace GeolettApi.Web
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true)
                 .AddEnvironmentVariables()
                 .Build();
+
+            SerilogConfiguration.ConfigureSerilog(Configuration);
         }
 
         public void ConfigureServices(IServiceCollection services)
