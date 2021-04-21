@@ -12,16 +12,19 @@
 
         public override void Update(EntityBase updatedEntity)
         {
-            var updated = (Reference)updatedEntity;
+            if(updatedEntity != null) 
+            { 
+                var updated = (Reference)updatedEntity;
 
-            if (Title != updated.Title)
-                Title = updated.Title;
+                if (Title != updated.Title)
+                    Title = updated.Title;
 
-            Tek17.Update(updated.Tek17);
+                Tek17.Update(updated.Tek17);
 
-            OtherLaw.Update(updated.OtherLaw);
+                OtherLaw.Update(updated.OtherLaw);
 
-            CircularFromMinistry.Update(updated.CircularFromMinistry);
+                CircularFromMinistry.Update(updated.CircularFromMinistry);
+            }
         }
     }
 }

@@ -13,24 +13,29 @@
 
         public override void Update(EntityBase updatedEntity)
         {
-            var updated = (DataSet) updatedEntity;
+            if(updatedEntity != null) 
+            { 
 
-            if (Title != updated.Title)
-                Title = updated.Title;
+                var updated = (DataSet) updatedEntity;
 
-            if (UrlMetadata != updated.UrlMetadata)
-                UrlMetadata = updated.UrlMetadata;
+                if (Title != updated.Title)
+                    Title = updated.Title;
 
-            if (BufferDistance != updated.BufferDistance)
-                BufferDistance = updated.BufferDistance;
+                if (UrlMetadata != updated.UrlMetadata)
+                    UrlMetadata = updated.UrlMetadata;
 
-            if (BufferText != updated.BufferText)
-                BufferText = updated.BufferText;
+                if (BufferDistance != updated.BufferDistance)
+                    BufferDistance = updated.BufferDistance;
 
-            if (Namespace != updated.Namespace)
-                Namespace = updated.Namespace;
+                if (BufferText != updated.BufferText)
+                    BufferText = updated.BufferText;
 
-            TypeReference.Update(updated.TypeReference);
+                if (Namespace != updated.Namespace)
+                    Namespace = updated.Namespace;
+
+                TypeReference.Update(updated.TypeReference);
+            
+            }
         }
     }
 }

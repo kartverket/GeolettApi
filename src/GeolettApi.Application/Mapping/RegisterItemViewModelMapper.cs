@@ -29,6 +29,18 @@ namespace GeolettApi.Application.Mapping
             if (viewModel == null)
                 return null;
 
+            List<RegisterItemLink> links = null;
+            if(viewModel.Links != null && viewModel.Links.Count> 0)
+                viewModel.Links?.ConvertAll(link => _registerItemlinkViewModelMapper.MapToDomainModel(link));
+
+            DataSet dataset = null;
+            if(viewModel.DataSet != null)
+                dataset= _dataSetViewModelMapper.MapToDomainModel(viewModel.DataSet);
+
+            Reference reference = null;
+            if (viewModel.Reference != null)
+                reference = _referenceViewModelMapper.MapToDomainModel(viewModel.Reference);
+
             return new RegisterItem
             {
                 Id = viewModel.Id,
@@ -36,12 +48,12 @@ namespace GeolettApi.Application.Mapping
                 ContextType = viewModel.ContextType,
                 Title = viewModel.Title,
                 Description = viewModel.Description,
-                Links = viewModel.Links?.ConvertAll(link => _registerItemlinkViewModelMapper.MapToDomainModel(link)),
+                Links = links,
                 DialogText = viewModel.DialogText,
                 PossibleMeasures = viewModel.PossibleMeasures,
                 Guidance = viewModel.Guidance,
-                DataSet = _dataSetViewModelMapper.MapToDomainModel(viewModel.DataSet),
-                Reference = _referenceViewModelMapper.MapToDomainModel(viewModel.Reference),
+                DataSet = dataset,
+                Reference = reference,
                 TechnicalComment = viewModel.TechnicalComment,
                 OtherComment = viewModel.OtherComment,
                 Sign1 = viewModel.Sign1,
