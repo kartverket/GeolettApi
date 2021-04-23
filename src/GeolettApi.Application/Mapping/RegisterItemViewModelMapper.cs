@@ -31,7 +31,7 @@ namespace GeolettApi.Application.Mapping
 
             List<RegisterItemLink> links = null;
             if(viewModel.Links != null && viewModel.Links.Count> 0)
-                viewModel.Links?.ConvertAll(link => _registerItemlinkViewModelMapper.MapToDomainModel(link));
+                links = viewModel.Links?.ConvertAll(link => _registerItemlinkViewModelMapper.MapToDomainModel(link));
 
             DataSet dataset = null;
             if(viewModel.DataSet != null)
