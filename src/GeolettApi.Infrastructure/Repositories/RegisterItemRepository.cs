@@ -66,24 +66,24 @@ namespace GeolettApi.Infrastructure.Repositories
 
             registerItem.Links.ForEach(registerItemLink => links.Add(registerItemLink.Link));
 
-            if (registerItem.Reference.Tek17 != null)
+            if (registerItem?.Reference?.Tek17 != null)
                 links.Add(registerItem.Reference.Tek17);
 
-            if (registerItem.Reference.OtherLaw != null)
+            if (registerItem?.Reference?.OtherLaw != null)
                 links.Add(registerItem.Reference.OtherLaw);
 
-            if (registerItem.Reference.CircularFromMinistry != null)
+            if (registerItem?.Reference?.CircularFromMinistry != null)
                 links.Add(registerItem.Reference.CircularFromMinistry);
 
             _context.Links.RemoveRange(links);
 
-            if (registerItem.DataSet?.TypeReference != null)
+            if (registerItem?.DataSet?.TypeReference != null)
                 _context.ObjectTypes.Remove(registerItem.DataSet.TypeReference);
 
-            if (registerItem.DataSet != null)
+            if (registerItem?.DataSet != null)
                 _context.DataSets.Remove(registerItem.DataSet);
 
-            if (registerItem.Reference != null)
+            if (registerItem?.Reference != null)
                 _context.References.Remove(registerItem.Reference);
         }
     }
