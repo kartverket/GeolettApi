@@ -33,8 +33,13 @@
                 if (Namespace != updated.Namespace)
                     Namespace = updated.Namespace;
 
-                TypeReference.Update(updated.TypeReference);
-            
+                if(updated.TypeReference != null) {
+                    if (TypeReference == null)
+                        TypeReference = new ObjectType();
+
+                    TypeReference.Update(updated.TypeReference);
+                }
+
             }
         }
     }

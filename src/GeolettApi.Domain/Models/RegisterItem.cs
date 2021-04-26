@@ -52,10 +52,14 @@ namespace GeolettApi.Domain.Models
 
             if (Guidance != updated.Guidance)
                 Guidance = updated.Guidance;
-            if(updated.DataSet != null)
+            if(updated.DataSet != null) { 
+                if(DataSet == null) {
+                    DataSet = new DataSet();
+                }
                 DataSet.Update(updated.DataSet);
+            }
 
-            if(updated.Reference != null)
+            if (updated.Reference != null)
             Reference.Update(updated.Reference);
 
             if (TechnicalComment != updated.TechnicalComment)

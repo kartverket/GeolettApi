@@ -59,6 +59,30 @@ namespace GeolettApi.Application.Services
             using var uow = _uowManager.GetUnitOfWork();
 
             var registerItem = await _registerItemRepository.GetByIdAsync(id);
+            if (update.DataSetId == null && update.DataSet != null)
+            {
+                ObjectType objectType = new ObjectType();
+
+                if (update.DataSet.ObjectTypeId == 0)
+                {
+                    uow.Context.ObjectTypes.Add(objectType);
+                    await uow.SaveChangesAsync();
+                }
+
+                DataSet dataSet = new DataSet { Title = update.DataSet.Title != null ? update.DataSet.Title : "" };
+                if (update.DataSet.ObjectTypeId == 0)
+                {
+                    update.DataSet.ObjectTypeId = objectType.Id;
+                    dataSet.ObjectTypeId = objectType.Id;
+                }
+                uow.Context.DataSets.Add(dataSet);
+                await uow.SaveChangesAsync();
+                update.DataSet.Id = dataSet.Id;
+                update.DataSetId = dataSet.Id;
+                if (update.DataSet.TypeReference == null)
+                    update.DataSet.TypeReference = objectType;
+
+            }
             registerItem.Update(update);
 
             ValidationHelper.Validate(_registerItemValidator, registerItem);
