@@ -22,6 +22,7 @@ namespace GeolettApi.Application.Mapping
             {
                 Id = viewModel.Id,
                 Title = viewModel.Title,
+                UuidMetadata = viewModel.UuidMetadata,
                 UrlMetadata = viewModel.UrlMetadata,
                 BufferDistance = viewModel.BufferDistance,
                 BufferText = viewModel.BufferText,
@@ -55,6 +56,7 @@ namespace GeolettApi.Application.Mapping
             {
                 Id = domainModel.Id,
                 Title = domainModel.Title,
+                UuidMetadata = domainModel.UuidMetadata,
                 UrlMetadata = domainModel.UrlMetadata,
                 BufferDistance = domainModel.BufferDistance,
                 BufferText = domainModel.BufferText,

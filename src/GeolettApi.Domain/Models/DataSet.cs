@@ -3,6 +3,7 @@
     public class DataSet : EntityBase
     {
         public string Title { get; set; }
+        public string UuidMetadata { get; set; }
         public string UrlMetadata { get; set; }
         public int? BufferDistance { get; set; }
         public string BufferText { get; set; }
@@ -23,6 +24,9 @@
 
                 if (UrlMetadata != updated.UrlMetadata)
                     UrlMetadata = updated.UrlMetadata;
+
+                if (UuidMetadata != updated.UuidMetadata)
+                    UuidMetadata = updated.UuidMetadata;
 
                 if (BufferDistance != updated.BufferDistance)
                     BufferDistance = updated.BufferDistance;
