@@ -6,6 +6,9 @@ namespace GeolettApi.Domain.Models
     public class RegisterItem : EntityBase
     {
         public string ContextType { get; set; }
+        public Guid Uuid { get; set; }
+        public int OwnerId { get; set; }
+        public Organization Owner { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public List<RegisterItemLink> Links { get; set; }
@@ -49,9 +52,14 @@ namespace GeolettApi.Domain.Models
 
             if (Guidance != updated.Guidance)
                 Guidance = updated.Guidance;
+            if(updated.DataSet != null) { 
+                if(DataSet == null) {
+                    DataSet = new DataSet();
+                }
+                DataSet.Update(updated.DataSet);
+            }
 
-            DataSet.Update(updated.DataSet);
-
+            if (updated.Reference != null)
             Reference.Update(updated.Reference);
 
             if (TechnicalComment != updated.TechnicalComment)
@@ -77,6 +85,9 @@ namespace GeolettApi.Domain.Models
 
             if (Sign6 != updated.Sign6)
                 Sign6 = updated.Sign6;
+
+            if (OwnerId != updated.OwnerId)
+                OwnerId = updated.OwnerId;
         }
     }
 }

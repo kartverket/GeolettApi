@@ -7,6 +7,7 @@ using System;
 namespace Geonorge.TiltaksplanApi.Web.Controllers
 {
     [ApiController]
+    [ApiExplorerSettings(GroupName = "internal")]
     [Route("[controller]")]
     public class SetupController : BaseController
     {

@@ -1,22 +1,27 @@
 ﻿using GeolettApi.Application.Models;
 using GeolettApi.Domain.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace GeolettApi.Application.Mapping
 {
-    public class RegisterItemViewModelMapper : IViewModelMapper<RegisterItem, RegisterItemViewModel>
+    public class RegisterItemViewModelMapper : IViewModelMapper<RegisterItem, RegisterItemViewModel,Geolett>
     {
-        private readonly IViewModelMapper<DataSet, DataSetViewModel> _dataSetViewModelMapper;
-        private readonly IViewModelMapper<Reference, ReferenceViewModel> _referenceViewModelMapper;
-        private readonly IViewModelMapper<RegisterItemLink, RegisterItemLinkViewModel> _registerItemlinkViewModelMapper;
+        private readonly IViewModelMapper<DataSet, DataSetViewModel,Geolett> _dataSetViewModelMapper;
+        private readonly IViewModelMapper<Reference, ReferenceViewModel, Geolett> _referenceViewModelMapper;
+        private readonly IViewModelMapper<RegisterItemLink, RegisterItemLinkViewModel, Geolett> _registerItemlinkViewModelMapper;
+        private readonly IViewModelMapper<Organization, OrganizationViewModel, Geolett> _organizationViewModelMapper;
 
         public RegisterItemViewModelMapper(
-            IViewModelMapper<DataSet, DataSetViewModel> dataSetViewModelMapper,
-            IViewModelMapper<Reference, ReferenceViewModel> referenceViewModelMapper,
-            IViewModelMapper<RegisterItemLink, RegisterItemLinkViewModel> registerItemlinkViewModelMapper)
+            IViewModelMapper<DataSet, DataSetViewModel, Geolett> dataSetViewModelMapper,
+            IViewModelMapper<Reference, ReferenceViewModel, Geolett> referenceViewModelMapper,
+            IViewModelMapper<RegisterItemLink, RegisterItemLinkViewModel, Geolett> registerItemlinkViewModelMapper,
+            IViewModelMapper<Organization, OrganizationViewModel, Geolett> organizationViewModelMapper)
         {
             _dataSetViewModelMapper = dataSetViewModelMapper;
             _referenceViewModelMapper = referenceViewModelMapper;
             _registerItemlinkViewModelMapper = registerItemlinkViewModelMapper;
+            _organizationViewModelMapper = organizationViewModelMapper;
         }
 
         public RegisterItem MapToDomainModel(RegisterItemViewModel viewModel)
@@ -24,18 +29,31 @@ namespace GeolettApi.Application.Mapping
             if (viewModel == null)
                 return null;
 
+            List<RegisterItemLink> links = null;
+            if(viewModel.Links != null && viewModel.Links.Count> 0)
+                links = viewModel.Links?.ConvertAll(link => _registerItemlinkViewModelMapper.MapToDomainModel(link));
+
+            DataSet dataset = null;
+            if(viewModel.DataSet != null)
+                dataset= _dataSetViewModelMapper.MapToDomainModel(viewModel.DataSet);
+
+            Reference reference = null;
+            if (viewModel.Reference != null)
+                reference = _referenceViewModelMapper.MapToDomainModel(viewModel.Reference);
+
             return new RegisterItem
             {
                 Id = viewModel.Id,
+                OwnerId = viewModel.Owner?.Id ?? 0,
                 ContextType = viewModel.ContextType,
                 Title = viewModel.Title,
                 Description = viewModel.Description,
-                Links = viewModel.Links?.ConvertAll(link => _registerItemlinkViewModelMapper.MapToDomainModel(link)),
+                Links = links,
                 DialogText = viewModel.DialogText,
                 PossibleMeasures = viewModel.PossibleMeasures,
                 Guidance = viewModel.Guidance,
-                DataSet = _dataSetViewModelMapper.MapToDomainModel(viewModel.DataSet),
-                Reference = _referenceViewModelMapper.MapToDomainModel(viewModel.Reference),
+                DataSet = dataset,
+                Reference = reference,
                 TechnicalComment = viewModel.TechnicalComment,
                 OtherComment = viewModel.OtherComment,
                 Sign1 = viewModel.Sign1,
@@ -55,6 +73,7 @@ namespace GeolettApi.Application.Mapping
             return new RegisterItemViewModel
             {
                 Id = domainModel.Id,
+                Owner = _organizationViewModelMapper.MapToViewModel(domainModel.Owner),
                 ContextType = domainModel.ContextType,
                 Title = domainModel.Title,
                 Description = domainModel.Description,
@@ -74,6 +93,69 @@ namespace GeolettApi.Application.Mapping
                 Sign6 = domainModel.Sign6,
                 LastUpdated = domainModel.LastUpdated                
             };
+        }
+        public Geolett MapToGeolett(RegisterItem domainModel)
+        {
+            if (domainModel == null)
+                return null;
+
+            var excludedLinks = new List<int>();
+            if(domainModel.Reference != null) 
+            {
+                if (domainModel.Reference.OtherLawId.HasValue)
+                    excludedLinks.Add(domainModel.Reference.OtherLawId.Value);
+                if (domainModel.Reference.Tek17Id.HasValue)
+                    excludedLinks.Add(domainModel.Reference.Tek17Id.Value);
+                if (domainModel.Reference.CircularFromMinistryId.HasValue)
+                    excludedLinks.Add(domainModel.Reference.CircularFromMinistryId.Value);
+            }
+
+            return new Geolett
+            {
+                ID = domainModel.Uuid.ToString(),
+                KontekstType = domainModel.ContextType,
+                Tittel = domainModel.Title,
+                ForklarendeTekst = domainModel.Description,
+                Lenker = domainModel.Links.Where(e => !excludedLinks.Contains(e.Id)).ToList()?.ConvertAll(link => _registerItemlinkViewModelMapper.MapToGeolett(link)),
+                Dialogtekst = domainModel.DialogText,
+                MuligeTiltak = domainModel.PossibleMeasures,
+                Veiledning = domainModel.Guidance,
+                Datasett = _dataSetViewModelMapper.MapToGeolett(domainModel.DataSet),
+                Referanse = _referenceViewModelMapper.MapToGeolett(domainModel.Reference),
+                TekniskKommentar = domainModel.TechnicalComment,
+                AnnenKommentar = domainModel.OtherComment,
+                Tegn1 = domainModel.Sign1,
+                Tegn2 = domainModel.Sign2,
+                Tegn3 = domainModel.Sign3,
+                Tegn4 = domainModel.Sign4,
+                Tegn5 = domainModel.Sign5,
+                Tegn6 = domainModel.Sign6
+            };
+        }
+
+        public Lenke MapToGeolett(RegisterItemLink link)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Geolett MapToGeolett(LinkViewModel link)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Datasett MapToGeolett(DataSet datasett)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public ObjektType MapToGeolett(ObjectType typeReference)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Referanse MapToGeolett(Reference reference)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

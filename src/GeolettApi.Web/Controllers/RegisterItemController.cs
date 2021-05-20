@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Geonorge.TiltaksplanApi.Web.Controllers
@@ -26,12 +27,16 @@ namespace Geonorge.TiltaksplanApi.Web.Controllers
             _registerItemQuery = registerItemQuery;
         }
 
+
+
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        [ApiExplorerSettings(GroupName = "internal")]
+        [ProducesResponseType(typeof(List<RegisterItemViewModel>), 200)]
+        public async Task<IActionResult> GetAllInternal()
         {
             try
             {
-                var viewModels = await _registerItemQuery.GetAllAsync();
+                var viewModels = await _registerItemQuery.GetAllInternalAsync();
 
                 return Ok(viewModels);
             }
@@ -46,6 +51,7 @@ namespace Geonorge.TiltaksplanApi.Web.Controllers
             }
         }
 
+        [ApiExplorerSettings(GroupName = "internal")]
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -67,6 +73,7 @@ namespace Geonorge.TiltaksplanApi.Web.Controllers
         }
 
         [HttpPost]
+        [ApiExplorerSettings(GroupName = "internal")]
         public async Task<IActionResult> Create([FromBody] RegisterItemViewModel viewModel)
         {
             if (viewModel == null || viewModel.Id != 0)
@@ -89,6 +96,7 @@ namespace Geonorge.TiltaksplanApi.Web.Controllers
             }
         }
 
+        [ApiExplorerSettings(GroupName = "internal")]
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Update(int id, [FromBody] RegisterItemViewModel viewModel)
         {
@@ -112,6 +120,7 @@ namespace Geonorge.TiltaksplanApi.Web.Controllers
             }
         }
 
+        [ApiExplorerSettings(GroupName = "internal")]
         [HttpPatch("{id:int}")]
         public async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<RegisterItemViewModel> patchDocument)
         {
@@ -135,6 +144,7 @@ namespace Geonorge.TiltaksplanApi.Web.Controllers
             }
         }
 
+        [ApiExplorerSettings(GroupName = "internal")]
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {

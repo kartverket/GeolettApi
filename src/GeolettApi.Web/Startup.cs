@@ -28,6 +28,12 @@ using Serilog;
 using System.Collections.Generic;
 using GeolettApi.Infrastructure.DataModel;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
+using System.IO;
+using System.Reflection;
+using System;
+using System.Linq;
+using GeolettApi.Application.Configuration;
 
 namespace GeolettApi.Web
 {
@@ -43,6 +49,8 @@ namespace GeolettApi.Web
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true)
                 .AddEnvironmentVariables()
                 .Build();
+
+            SerilogConfiguration.ConfigureSerilog(Configuration);
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -53,7 +61,8 @@ namespace GeolettApi.Web
 
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = "GeolettApi.Web", Version = "v1" });
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Geolett api", Version = "v1" });
+                options.SwaggerDoc("internal", new OpenApiInfo { Title = "Geolett internal api", Version = "internal" });
 
                 options.SchemaFilter<SwaggerExcludePropertySchemaFilter>();
 
@@ -83,6 +92,19 @@ namespace GeolettApi.Web
                         new List<string>()
                     }
                 });
+
+                //Collect all referenced projects output XML document file paths  
+                var currentAssembly = Assembly.GetExecutingAssembly();
+                var xmlDocs = currentAssembly.GetReferencedAssemblies()
+                .Union(new AssemblyName[] { currentAssembly.GetName() })
+                .Select(a => Path.Combine(Path.GetDirectoryName(currentAssembly.Location), $"{a.Name}.xml"))
+                .Where(f => File.Exists(f)).ToArray();
+
+                Array.ForEach(xmlDocs, (d) =>
+                {
+                    options.IncludeXmlComments(d);
+                });
+
             });
 
             services.AddEntityFrameworkForGeolett(Configuration);
@@ -109,18 +131,19 @@ namespace GeolettApi.Web
             // Queries
             services.AddTransient<IAsyncQuery<RegisterItemViewModel>, RegisterItemQuery>();
             services.AddTransient<IAsyncQuery<DataSetViewModel>, DataSetQuery>();
+            services.AddTransient<IOrganizationQuery, OrganizationQuery>();
 
             // Repositories
             services.AddScoped<IRepository<RegisterItem, int>, RegisterItemRepository>();
 
             // Mappers
-            services.AddTransient<IViewModelMapper<RegisterItem, RegisterItemViewModel>, RegisterItemViewModelMapper>();
-            services.AddTransient<IViewModelMapper<DataSet, DataSetViewModel>, DataSetViewModelMapper>();
-            services.AddTransient<IViewModelMapper<Reference, ReferenceViewModel>, ReferenceViewModelMapper>();
-            services.AddTransient<IViewModelMapper<ObjectType, ObjectTypeViewModel>, ObjectTypeViewModelMapper>();
-            services.AddTransient<IViewModelMapper<Link, LinkViewModel>, LinkViewModelMapper>();
-            services.AddTransient<IViewModelMapper<RegisterItemLink, RegisterItemLinkViewModel>, RegisterItemLinkViewModelMapper>();
-            
+            services.AddTransient<IViewModelMapper<RegisterItem, RegisterItemViewModel, Geolett>, RegisterItemViewModelMapper>();
+            services.AddTransient<IViewModelMapper<DataSet, DataSetViewModel, Geolett>, DataSetViewModelMapper>();
+            services.AddTransient<IViewModelMapper<Reference, ReferenceViewModel, Geolett>, ReferenceViewModelMapper>();
+            services.AddTransient<IViewModelMapper<ObjectType, ObjectTypeViewModel, Geolett>, ObjectTypeViewModelMapper>();
+            services.AddTransient<IViewModelMapper<Link, LinkViewModel, Geolett>, LinkViewModelMapper>();
+            services.AddTransient<IViewModelMapper<RegisterItemLink, RegisterItemLinkViewModel, Geolett>, RegisterItemLinkViewModelMapper>();
+            services.AddTransient<IViewModelMapper<Organization, OrganizationViewModel,Geolett>, OrganizationViewModelMapper>();
             // Configuration
             services.Configure<GeoIDConfiguration>(Configuration.GetSection(GeoIDConfiguration.SectionName));
         }
@@ -149,8 +172,10 @@ namespace GeolettApi.Web
 
             app.UseSwaggerUI(options =>
             {
-                var url = $"{(!env.IsLocal() ? "/api" : "")}/swagger/v1/swagger.json";
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "GeolettApi.Web v1");
+                var url = $"{(!Debugger.IsAttached ? "/geolett/api" : "")}/swagger/v1/swagger.json";
+                options.SwaggerEndpoint(url, "Geolett api v1");
+                url = $"{(!Debugger.IsAttached ? "/geolett/api" : "")}/swagger/internal/swagger.json";
+                options.SwaggerEndpoint(url, "Geolett api internal v1");
             });
 
             app.UseHttpsRedirection();
@@ -175,6 +200,9 @@ namespace GeolettApi.Web
             using var context = serviceScope.ServiceProvider.GetService<GeolettContext>();
 
             context.Database.Migrate();
+
+            var apiUrls = Configuration.GetSection(ApiUrlsConfiguration.SectionName).Get<ApiUrlsConfiguration>();
+            DataSeeder.SeedOrganizations(context, apiUrls.Organizations);
         }
     }
 }

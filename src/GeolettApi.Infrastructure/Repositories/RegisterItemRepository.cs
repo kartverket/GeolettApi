@@ -27,6 +27,7 @@ namespace GeolettApi.Infrastructure.Repositories
         public async Task<RegisterItem> GetByIdAsync(int id)
         {
             return await GetAll()
+                .Include(registerItem => registerItem.Owner)
                 .Include(registerItem => registerItem.DataSet)
                     .ThenInclude(dataSet => dataSet.TypeReference)
                 .Include(registerItem => registerItem.Reference)
@@ -42,7 +43,9 @@ namespace GeolettApi.Infrastructure.Repositories
 
         public RegisterItem Create(RegisterItem registerItem)
         {
-            _context.RegisterItems.Add(registerItem);
+            var registerItemAdded = _context.RegisterItems.Add(registerItem);
+            var owner = _context.Organizations.Where(o => o.Id == registerItem.OwnerId).FirstOrDefault();
+            registerItem.Owner = owner;
 
             return registerItem;
         }
@@ -63,24 +66,24 @@ namespace GeolettApi.Infrastructure.Repositories
 
             registerItem.Links.ForEach(registerItemLink => links.Add(registerItemLink.Link));
 
-            if (registerItem.Reference.Tek17 != null)
+            if (registerItem?.Reference?.Tek17 != null)
                 links.Add(registerItem.Reference.Tek17);
 
-            if (registerItem.Reference.OtherLaw != null)
+            if (registerItem?.Reference?.OtherLaw != null)
                 links.Add(registerItem.Reference.OtherLaw);
 
-            if (registerItem.Reference.CircularFromMinistry != null)
+            if (registerItem?.Reference?.CircularFromMinistry != null)
                 links.Add(registerItem.Reference.CircularFromMinistry);
 
             _context.Links.RemoveRange(links);
 
-            if (registerItem.DataSet?.TypeReference != null)
+            if (registerItem?.DataSet?.TypeReference != null)
                 _context.ObjectTypes.Remove(registerItem.DataSet.TypeReference);
 
-            if (registerItem.DataSet != null)
+            if (registerItem?.DataSet != null)
                 _context.DataSets.Remove(registerItem.DataSet);
 
-            if (registerItem.Reference != null)
+            if (registerItem?.Reference != null)
                 _context.References.Remove(registerItem.Reference);
         }
     }

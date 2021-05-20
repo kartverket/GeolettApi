@@ -16,14 +16,14 @@ namespace GeolettApi.Application.Services
     {
         private readonly IUnitOfWorkManager _uowManager;
         private readonly IRepository<RegisterItem, int> _registerItemRepository;
-        private readonly IViewModelMapper<RegisterItem, RegisterItemViewModel> _registerItemViewModelMapper;
+        private readonly IViewModelMapper<RegisterItem, RegisterItemViewModel, Geolett> _registerItemViewModelMapper;
         private readonly IAuthorizationService _authorizationService;
         private readonly IValidator<RegisterItem> _registerItemValidator;
 
         public RegisterItemService(
             IUnitOfWorkManager uowManager,
             IRepository<RegisterItem, int> registerItemRepository,
-            IViewModelMapper<RegisterItem, RegisterItemViewModel> registerItemViewModelMapper,
+            IViewModelMapper<RegisterItem, RegisterItemViewModel, Geolett> registerItemViewModelMapper,
             IAuthorizationService authorizationService,
             IValidator<RegisterItem> registerItemValidator)
         {
@@ -52,13 +52,37 @@ namespace GeolettApi.Application.Services
 
         public async Task<RegisterItemViewModel> UpdateAsync(int id, RegisterItemViewModel viewModel)
         {
-            await _authorizationService.AuthorizeActivity(UserActivity.UpdateRegisterItem);
+            await _authorizationService.AuthorizeActivity(UserActivity.UpdateRegisterItem, id);
 
             var update = _registerItemViewModelMapper.MapToDomainModel(viewModel);
 
             using var uow = _uowManager.GetUnitOfWork();
 
             var registerItem = await _registerItemRepository.GetByIdAsync(id);
+            if (update.DataSetId == null && update.DataSet != null)
+            {
+                ObjectType objectType = new ObjectType();
+
+                if (update.DataSet.ObjectTypeId == 0)
+                {
+                    uow.Context.ObjectTypes.Add(objectType);
+                    await uow.SaveChangesAsync();
+                }
+
+                DataSet dataSet = new DataSet { Title = update.DataSet.Title != null ? update.DataSet.Title : "" };
+                if (update.DataSet.ObjectTypeId == 0)
+                {
+                    update.DataSet.ObjectTypeId = objectType.Id;
+                    dataSet.ObjectTypeId = objectType.Id;
+                }
+                uow.Context.DataSets.Add(dataSet);
+                await uow.SaveChangesAsync();
+                update.DataSet.Id = dataSet.Id;
+                update.DataSetId = dataSet.Id;
+                if (update.DataSet.TypeReference == null)
+                    update.DataSet.TypeReference = objectType;
+
+            }
             registerItem.Update(update);
 
             ValidationHelper.Validate(_registerItemValidator, registerItem);
@@ -93,7 +117,7 @@ namespace GeolettApi.Application.Services
 
         public async Task<bool> DeleteAsync(int id)
         {
-            await _authorizationService.AuthorizeActivity(UserActivity.DeleteRegisterItem);
+            await _authorizationService.AuthorizeActivity(UserActivity.DeleteRegisterItem, id);
 
             using var uow = _uowManager.GetUnitOfWork();
 

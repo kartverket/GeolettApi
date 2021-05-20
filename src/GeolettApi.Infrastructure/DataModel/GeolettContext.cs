@@ -21,6 +21,7 @@ namespace GeolettApi.Infrastructure.DataModel
         public DbSet<ObjectType> ObjectTypes { get; set; }
         public DbSet<Link> Links { get; set; }
         public DbSet<RegisterItemLink> RegisterItemLinks { get; set; }
+        public DbSet<Organization> Organizations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -32,8 +33,12 @@ namespace GeolettApi.Infrastructure.DataModel
             builder.Entity<ObjectType>(ObjectTypeConfiguration.Configure);
             builder.Entity<RegisterItemLink>(RegisterItemLinkConfiguration.Configure);
             builder.Entity<Link>(LinkConfiguration.Configure);
+            builder.Entity<Organization>(OrganizationConfiguration.Configure);
 
             base.OnModelCreating(builder);
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder.LogTo(System.Console.WriteLine);
     }
 }

@@ -1,24 +1,38 @@
-﻿using GeolettApi.Application.Models;
+﻿using FluentValidation.Results;
+using GeolettApi.Application.Models;
 using GeolettApi.Domain.Models;
+using System.Collections.Generic;
 
 namespace GeolettApi.Application.Mapping
 {
-    public class LinkViewModelMapper : IViewModelMapper<Link, LinkViewModel,Geolett>
+    public class OrganizationViewModelMapper : IViewModelMapper<Organization, OrganizationViewModel,Geolett>
     {
-        public Link MapToDomainModel(LinkViewModel viewModel)
+
+        public OrganizationViewModelMapper(
+            )
+        {
+            
+        }
+
+        public Organization MapToDomainModel(OrganizationViewModel viewModel)
         {
             if (viewModel == null)
                 return null;
 
-            return new Link
+            return new Organization
             {
                 Id = viewModel.Id,
-                Text = viewModel.Text,
-                Url = viewModel.Url
+                Name = viewModel.Name,
+                OrgNumber = viewModel.OrgNumber
             };
         }
 
         public Geolett MapToGeolett(RegisterItem registerItem)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Datasett MapToGeolett(DataSet datasett)
         {
             throw new System.NotImplementedException();
         }
@@ -33,11 +47,6 @@ namespace GeolettApi.Application.Mapping
             throw new System.NotImplementedException();
         }
 
-        public Datasett MapToGeolett(DataSet datasett)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public ObjektType MapToGeolett(ObjectType typeReference)
         {
             throw new System.NotImplementedException();
@@ -48,16 +57,16 @@ namespace GeolettApi.Application.Mapping
             throw new System.NotImplementedException();
         }
 
-        public LinkViewModel MapToViewModel(Link domainModel)
+        public OrganizationViewModel MapToViewModel(Organization domainModel)
         {
             if (domainModel == null)
                 return null;
 
-            return new LinkViewModel
+            return new OrganizationViewModel
             {
                 Id = domainModel.Id,
-                Text = domainModel.Text,
-                Url = domainModel.Url
+                Name = domainModel.Name,
+                OrgNumber = domainModel.OrgNumber
             };
         }
     }

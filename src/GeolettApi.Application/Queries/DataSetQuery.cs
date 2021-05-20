@@ -11,17 +11,22 @@ namespace GeolettApi.Application.Queries
     public class DataSetQuery : IAsyncQuery<DataSetViewModel>
     {
         private readonly GeolettContext _context;
-        private readonly IViewModelMapper<DataSet, DataSetViewModel> _dataSetViewModelMapper;
+        private readonly IViewModelMapper<DataSet, DataSetViewModel, Geolett> _dataSetViewModelMapper;
 
         public DataSetQuery(
             GeolettContext context,
-            IViewModelMapper<DataSet, DataSetViewModel> dataSetViewModelMapper)
+            IViewModelMapper<DataSet, DataSetViewModel, Geolett> dataSetViewModelMapper)
         {
             _context = context;
             _dataSetViewModelMapper = dataSetViewModelMapper;
         }
 
-        public async Task<List<DataSetViewModel>> GetAllAsync()
+        public Task<List<Geolett>> GetAllAsync()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public async Task<List<DataSetViewModel>> GetAllInternalAsync()
         {
             var dataSets = await _context.DataSets
                 .Include(registerItem => registerItem.TypeReference)
@@ -42,6 +47,11 @@ namespace GeolettApi.Application.Queries
                 .SingleOrDefaultAsync(dataSet => dataSet.Id == id);
 
             return _dataSetViewModelMapper.MapToViewModel(dataSet);
+        }
+
+        public Task<bool> HasOwnership(int id, long orgNumber)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

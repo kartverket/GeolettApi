@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace Geonorge.TiltaksplanApi.Web.Controllers
 {
     [ApiController]
+    [ApiExplorerSettings(GroupName = "internal", IgnoreApi = true)]
     [Route("[controller]")]
     public class DataSetController : BaseController
     {
@@ -26,7 +27,7 @@ namespace Geonorge.TiltaksplanApi.Web.Controllers
         {
             try
             {
-                var viewModels = await _dataSetQuery.GetAllAsync();
+                var viewModels = await _dataSetQuery.GetAllInternalAsync();
 
                 return Ok(viewModels);
             }

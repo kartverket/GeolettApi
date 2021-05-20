@@ -8,9 +8,12 @@
 
         public override void Update(EntityBase updatedEntity)
         {
-            var update = (RegisterItemLink) updatedEntity;
+            if(updatedEntity != null) 
+            { 
+                var update = (RegisterItemLink) updatedEntity;
 
-            Link.Update(update.Link);
+                Link.Update(update.Link);
+            }
         }
     }
 }

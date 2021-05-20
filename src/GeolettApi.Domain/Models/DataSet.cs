@@ -3,6 +3,7 @@
     public class DataSet : EntityBase
     {
         public string Title { get; set; }
+        public string UuidMetadata { get; set; }
         public string UrlMetadata { get; set; }
         public int? BufferDistance { get; set; }
         public string BufferText { get; set; }
@@ -13,24 +14,37 @@
 
         public override void Update(EntityBase updatedEntity)
         {
-            var updated = (DataSet) updatedEntity;
+            if(updatedEntity != null) 
+            { 
 
-            if (Title != updated.Title)
-                Title = updated.Title;
+                var updated = (DataSet) updatedEntity;
 
-            if (UrlMetadata != updated.UrlMetadata)
-                UrlMetadata = updated.UrlMetadata;
+                if (Title != updated.Title)
+                    Title = updated.Title;
 
-            if (BufferDistance != updated.BufferDistance)
-                BufferDistance = updated.BufferDistance;
+                if (UrlMetadata != updated.UrlMetadata)
+                    UrlMetadata = updated.UrlMetadata;
 
-            if (BufferText != updated.BufferText)
-                BufferText = updated.BufferText;
+                if (UuidMetadata != updated.UuidMetadata)
+                    UuidMetadata = updated.UuidMetadata;
 
-            if (Namespace != updated.Namespace)
-                Namespace = updated.Namespace;
+                if (BufferDistance != updated.BufferDistance)
+                    BufferDistance = updated.BufferDistance;
 
-            TypeReference.Update(updated.TypeReference);
+                if (BufferText != updated.BufferText)
+                    BufferText = updated.BufferText;
+
+                if (Namespace != updated.Namespace)
+                    Namespace = updated.Namespace;
+
+                if(updated.TypeReference != null) {
+                    if (TypeReference == null)
+                        TypeReference = new ObjectType();
+
+                    TypeReference.Update(updated.TypeReference);
+                }
+
+            }
         }
     }
 }

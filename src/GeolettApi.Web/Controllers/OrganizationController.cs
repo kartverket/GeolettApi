@@ -1,33 +1,33 @@
 ﻿using System;
 using System.Threading.Tasks;
-using GeolettApi.Application.Services.Authorization.GeoID;
+using GeolettApi.Application.Queries;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace GeolettApi.Web.Controllers
 {
-    [Route("Authzinfo")]
     [ApiExplorerSettings(GroupName = "internal")]
     [ApiController]
-    public class UserController : BaseController
+    [Route("Organizations")]
+    public class OrganizationController : BaseController
     {
-        private readonly IGeoIDService _geoIDService;
+        private readonly IOrganizationQuery _organizationQuery;
 
-        public UserController(
-            IGeoIDService geoIDService,
-            ILogger<UserController> logger) : base(logger)
+        public OrganizationController(
+            IOrganizationQuery organizationQuery,
+            ILogger<OrganizationController> logger) : base(logger)
         {
-            _geoIDService = geoIDService;
+            _organizationQuery = organizationQuery;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetAll()
         {
             try
             {
-                var user = await _geoIDService.GetUser();
+                var owners = await _organizationQuery.GetAllAsync();
 
-                return Ok(user);
+                return Ok(owners);
             }
             catch (Exception exception)
             {
@@ -41,3 +41,4 @@ namespace GeolettApi.Web.Controllers
         }
     }
 }
+

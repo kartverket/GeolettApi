@@ -4,14 +4,16 @@ using GeolettApi.Infrastructure.DataModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GeolettApi.Infrastructure.Migrations
 {
     [DbContext(typeof(GeolettContext))]
-    partial class GeolettContextModelSnapshot : ModelSnapshot
+    [Migration("20210304111517_AddRegisterItemUuid")]
+    partial class AddRegisterItemUuid
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,9 +49,6 @@ namespace GeolettApi.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UrlMetadata")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UuidMetadata")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -99,24 +98,6 @@ namespace GeolettApi.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ObjectTypes");
-                });
-
-            modelBuilder.Entity("GeolettApi.Domain.Models.Organization", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("OrgNumber")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Organizations");
                 });
 
             modelBuilder.Entity("GeolettApi.Domain.Models.Reference", b =>
@@ -184,9 +165,6 @@ namespace GeolettApi.Infrastructure.Migrations
                     b.Property<string>("OtherComment")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OwnerId")
-                        .HasColumnType("int");
-
                     b.Property<string>("PossibleMeasures")
                         .HasColumnType("nvarchar(max)");
 
@@ -228,8 +206,6 @@ namespace GeolettApi.Infrastructure.Migrations
                     b.HasIndex("DataSetId")
                         .IsUnique()
                         .HasFilter("[DataSetId] IS NOT NULL");
-
-                    b.HasIndex("OwnerId");
 
                     b.HasIndex("ReferenceId")
                         .IsUnique()
@@ -298,19 +274,11 @@ namespace GeolettApi.Infrastructure.Migrations
                         .WithOne()
                         .HasForeignKey("GeolettApi.Domain.Models.RegisterItem", "DataSetId");
 
-                    b.HasOne("GeolettApi.Domain.Models.Organization", "Owner")
-                        .WithMany()
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("GeolettApi.Domain.Models.Reference", "Reference")
                         .WithOne()
                         .HasForeignKey("GeolettApi.Domain.Models.RegisterItem", "ReferenceId");
 
                     b.Navigation("DataSet");
-
-                    b.Navigation("Owner");
 
                     b.Navigation("Reference");
                 });

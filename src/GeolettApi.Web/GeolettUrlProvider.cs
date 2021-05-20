@@ -35,15 +35,18 @@ namespace Geonorge.TiltaksplanApi.Web
 
             apiUrls.registerItem = new ExpandoObject();
             apiUrls.registerItem.get = GetControllerUrl(urlHelper, "GetById", "RegisterItem", new { id = 0 });
-            apiUrls.registerItem.getAll = GetControllerUrl(urlHelper, "GetAll", "RegisterItem");
+            apiUrls.registerItem.getAll = GetControllerUrl(urlHelper, "GetAllInternal", "RegisterItem");
             apiUrls.registerItem.create = GetControllerUrl(urlHelper, "Create", "RegisterItem");
             apiUrls.registerItem.update = GetControllerUrl(urlHelper, "Update", "RegisterItem", new { id = 0 });
             apiUrls.registerItem.patch = GetControllerUrl(urlHelper, "Patch", "RegisterItem", new { id = 0 });
             apiUrls.registerItem.delete = GetControllerUrl(urlHelper, "Delete", "RegisterItem", new { id = 0 });
 
-            apiUrls.dataSet = new ExpandoObject();
-            apiUrls.dataSet.get = GetControllerUrl(urlHelper, "GetById", "DataSet", new { id = 0 });
-            apiUrls.dataSet.getAll = GetControllerUrl(urlHelper, "GetAll", "DataSet");
+            apiUrls.organizations = new ExpandoObject();
+            apiUrls.organizations.getAll = GetControllerUrl(urlHelper, "GetAll", "Organization");
+
+            //apiUrls.dataSet = new ExpandoObject();
+            //apiUrls.dataSet.get = GetControllerUrl(urlHelper, "GetById", "DataSet", new { id = 0 });
+            //apiUrls.dataSet.getAll = GetControllerUrl(urlHelper, "GetAll", "DataSet");
 
             apiUrls.setup = new ExpandoObject();
             apiUrls.setup.get = GetControllerUrl(urlHelper, "Get", "Setup");
