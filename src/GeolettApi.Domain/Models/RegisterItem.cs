@@ -59,8 +59,11 @@ namespace GeolettApi.Domain.Models
                 DataSet.Update(updated.DataSet);
             }
 
-            if (updated.Reference != null)
+            if (updated.Reference != null) {
+                if (Reference == null)
+                    Reference = new Reference();
             Reference.Update(updated.Reference);
+            }
 
             if (TechnicalComment != updated.TechnicalComment)
                 TechnicalComment = updated.TechnicalComment;
