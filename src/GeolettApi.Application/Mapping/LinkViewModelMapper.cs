@@ -13,7 +13,7 @@ namespace GeolettApi.Application.Mapping
             return new Link
             {
                 Id = viewModel.Id,
-                Text = viewModel.Text,
+                Text = !string.IsNullOrEmpty(viewModel.Text) ? viewModel.Text : "Mangler" ,
                 Url = viewModel.Url
             };
         }

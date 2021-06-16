@@ -21,7 +21,7 @@ namespace GeolettApi.Application.Mapping
             return new Reference
             {
                 Id = viewModel.Id,
-                Title = viewModel.Title,
+                Title = !string.IsNullOrEmpty(viewModel.Title) ? viewModel.Title : "Mangler",
                 Tek17 = _linkViewModelMapper.MapToDomainModel(viewModel.Tek17),
                 OtherLaw = _linkViewModelMapper.MapToDomainModel(viewModel.OtherLaw),
                 CircularFromMinistry = _linkViewModelMapper.MapToDomainModel(viewModel.CircularFromMinistry)
