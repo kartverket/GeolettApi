@@ -10,6 +10,9 @@ namespace GeolettApi.Application.Mapping
             if (viewModel == null)
                 return null;
 
+            if (string.IsNullOrEmpty(viewModel.Url))
+                return null;
+
             return new Link
             {
                 Id = viewModel.Id,

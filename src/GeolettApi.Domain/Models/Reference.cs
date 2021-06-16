@@ -18,23 +18,29 @@
 
                 if (Title != updated.Title)
                     Title = updated.Title;
-                if(updated.Tek17 != null) {
+                if (updated.Tek17 != null) {
                     if (Tek17 == null)
                         Tek17 = new Link();
                     Tek17.Update(updated.Tek17);
                 }
+                else { Tek17 = null; }
+
                 if(updated.OtherLaw != null) 
                 {
                     if (OtherLaw == null)
                         OtherLaw = new Link();
                     OtherLaw.Update(updated.OtherLaw);
                 }
+                else { OtherLaw = null; }
+
+
                 if(updated.CircularFromMinistry != null) 
                 {
                     if (CircularFromMinistry == null)
                         CircularFromMinistry = new Link();
                     CircularFromMinistry.Update(updated.CircularFromMinistry);
                 }
+                else { CircularFromMinistry = null; }
             }
         }
     }
