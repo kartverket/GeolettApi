@@ -34,6 +34,8 @@ using System.Reflection;
 using System;
 using System.Linq;
 using GeolettApi.Application.Configuration;
+using System.Net;
+using System.Net.Http;
 
 namespace GeolettApi.Web
 {
@@ -146,6 +148,8 @@ namespace GeolettApi.Web
             services.AddTransient<IViewModelMapper<Organization, OrganizationViewModel,Geolett>, OrganizationViewModelMapper>();
             // Configuration
             services.Configure<GeoIDConfiguration>(Configuration.GetSection(GeoIDConfiguration.SectionName));
+
+            ConfigureProxy(Configuration);
         }
 
         public void Configure(
@@ -203,6 +207,21 @@ namespace GeolettApi.Web
 
             var apiUrls = Configuration.GetSection(ApiUrlsConfiguration.SectionName).Get<ApiUrlsConfiguration>();
             DataSeeder.SeedOrganizations(context, apiUrls.Organizations);
+        }
+
+        private static void ConfigureProxy(IConfigurationRoot settings)
+        {
+            var urlProxy = settings.GetValue<string>("UrlProxy");
+
+            if (!string.IsNullOrWhiteSpace(urlProxy))
+            {
+                WebProxy proxy = new WebProxy(urlProxy);
+
+                proxy.Credentials = CredentialCache.DefaultCredentials;
+
+                WebRequest.DefaultWebProxy = proxy;
+                HttpClient.DefaultProxy = proxy;
+            }
         }
     }
 }
