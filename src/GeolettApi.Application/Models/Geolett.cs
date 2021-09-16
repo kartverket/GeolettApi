@@ -97,6 +97,10 @@ namespace GeolettApi.Application.Models
         /// <example>Eiketrær kan bli flere hundre år gamle og et stort mangfold av arter lever i hulrom, dype barkesprekker og på døde grener i slike trær. Så mange som 1500 arter kan leve på og i hule eiker. Hul eik er en utvalgt naturtype som skal tas hensyn til og vurderes i byggesøknaden</example>
         public string BufferText { get; set; }
         /// <summary>
+        ///Tekst skal gi brukeren råd og veiledning om hva som bør gjøres eller ikke gjøres innenfor buffersonen til lokaliteten 
+        /// </summary>
+        public string BufferMuligeTiltak { get; set; }
+        /// <summary>
         /// Url til gml-skjema
         /// </summary>
         /// <example>http://skjema.geonorge.no/SOSI/produktspesifikasjon/NaturtyperUtvalgte/20200320/NaturtyperUtvalgte.xsd</example>
