@@ -7,6 +7,7 @@
         public string UrlMetadata { get; set; }
         public int? BufferDistance { get; set; }
         public string BufferText { get; set; }
+        public string BufferPossibleMeasures { get; set; }
         public string UrlGmlSchema { get; set; }
         public string Namespace { get; set; }
         public int ObjectTypeId { get; set; }
@@ -33,6 +34,9 @@
 
                 if (BufferText != updated.BufferText)
                     BufferText = updated.BufferText;
+
+                if (BufferPossibleMeasures != updated.BufferPossibleMeasures)
+                    BufferPossibleMeasures = updated.BufferPossibleMeasures;
 
                 if (Namespace != updated.Namespace)
                     Namespace = updated.Namespace;

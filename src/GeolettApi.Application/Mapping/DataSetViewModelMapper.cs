@@ -26,6 +26,7 @@ namespace GeolettApi.Application.Mapping
                 UrlMetadata = viewModel.UrlMetadata,
                 BufferDistance = viewModel.BufferDistance,
                 BufferText = viewModel.BufferText,
+                BufferPossibleMeasures = viewModel.BufferPossibleMeasures,
                 UrlGmlSchema = viewModel.UrlGmlSchema,
                 Namespace = viewModel.Namespace,
                 TypeReference = _objectTypeViewModelMapper.MapToDomainModel(viewModel.TypeReference)
@@ -60,6 +61,7 @@ namespace GeolettApi.Application.Mapping
                 UrlMetadata = domainModel.UrlMetadata,
                 BufferDistance = domainModel.BufferDistance,
                 BufferText = domainModel.BufferText,
+                BufferPossibleMeasures = domainModel.BufferPossibleMeasures,
                 UrlGmlSchema = domainModel.UrlGmlSchema,
                 Namespace = domainModel.Namespace,
                 TypeReference = _objectTypeViewModelMapper.MapToViewModel(domainModel.TypeReference)
@@ -77,6 +79,7 @@ namespace GeolettApi.Application.Mapping
                 UrlMetadata = domainModel.UrlMetadata,
                 BufferAvstand = domainModel.BufferDistance,
                 BufferText = domainModel.BufferText,
+                BufferMuligeTiltak = domainModel.BufferPossibleMeasures,
                 GmlSkjema = domainModel.UrlGmlSchema,
                 Navnerom = domainModel.Namespace,
                 TypeReferanse = _objectTypeViewModelMapper.MapToGeolett(domainModel.TypeReference)
