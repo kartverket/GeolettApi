@@ -61,6 +61,15 @@ namespace GeolettApi.Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Konteksttype må fylles ut.
+        /// </summary>
+        internal static string ContextType {
+            get {
+                return ResourceManager.GetString("ContextType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tekst må fylles ut.
         /// </summary>
         internal static string LinkText {
