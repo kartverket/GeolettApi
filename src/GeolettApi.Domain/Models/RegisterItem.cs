@@ -44,6 +44,9 @@ namespace GeolettApi.Domain.Models
             if (Description != updated.Description)
                 Description = updated.Description;
 
+            if (Status != updated.Status)
+                Status = updated.Status;
+
             UpdateList(Links, updated.Links);
 
             if (DialogText != updated.DialogText)
