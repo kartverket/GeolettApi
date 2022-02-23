@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GeolettApi.Domain.Models;
+using System;
 using System.Collections.Generic;
 
 namespace GeolettApi.Application.Models
@@ -10,6 +11,7 @@ namespace GeolettApi.Application.Models
         public string ContextType { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+        public Status? Status { get; set; } = GeolettApi.Domain.Models.Status.Submitted;
         public List<RegisterItemLinkViewModel> Links { get; set; }
         public string DialogText { get; set; }
         public string PossibleMeasures { get; set; }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using GeolettApi.Domain.Models;
 
 namespace GeolettApi.Domain.Models
 {
@@ -11,6 +12,7 @@ namespace GeolettApi.Domain.Models
         public Organization Owner { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+        public Status? Status { get; set; } = GeolettApi.Domain.Models.Status.Submitted;
         public List<RegisterItemLink> Links { get; set; }
         public string DialogText { get; set; }
         public string PossibleMeasures { get; set; }
