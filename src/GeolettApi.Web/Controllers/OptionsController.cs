@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 namespace GeolettApi.Web.Controllers
 {
     [ApiController]
+    [ApiExplorerSettings(GroupName = "internal")]
     [Route("[controller]")]
     public class OptionsController : BaseController
     {

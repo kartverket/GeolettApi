@@ -54,6 +54,9 @@ namespace Geonorge.TiltaksplanApi.Web
             apiUrls.user = new ExpandoObject();
             apiUrls.user.get = GetControllerUrl(urlHelper, "Get", "User");
 
+            apiUrls.options = new ExpandoObject();
+            apiUrls.options.getAll = GetControllerUrl(urlHelper, "Get", "Options");
+
             return apiUrls;
         }
 
