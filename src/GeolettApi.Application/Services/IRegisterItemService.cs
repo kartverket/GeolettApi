@@ -10,5 +10,6 @@ namespace GeolettApi.Application.Services
         Task<RegisterItemViewModel> UpdateAsync(int id, RegisterItemViewModel viewModel);
         Task<RegisterItemViewModel> UpdateAsync(int id, JsonPatchDocument<RegisterItemViewModel> patchDocument);
         Task<bool> DeleteAsync(int id);
+        Task<RegisterItemViewModel> CloneAsync(RegisterItemViewModel model);
     }
 }

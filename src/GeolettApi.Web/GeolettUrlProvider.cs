@@ -40,6 +40,7 @@ namespace Geonorge.TiltaksplanApi.Web
             apiUrls.registerItem.update = GetControllerUrl(urlHelper, "Update", "RegisterItem", new { id = 0 });
             apiUrls.registerItem.patch = GetControllerUrl(urlHelper, "Patch", "RegisterItem", new { id = 0 });
             apiUrls.registerItem.delete = GetControllerUrl(urlHelper, "Delete", "RegisterItem", new { id = 0 });
+            apiUrls.registerItem.clone = GetControllerUrl(urlHelper, "Clone", "RegisterItem", new { id = 0 });
 
             apiUrls.organizations = new ExpandoObject();
             apiUrls.organizations.getAll = GetControllerUrl(urlHelper, "GetAll", "Organization");

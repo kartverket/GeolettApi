@@ -96,6 +96,37 @@ namespace Geonorge.TiltaksplanApi.Web.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("clone{id:int}")]
+        [ApiExplorerSettings(GroupName = "internal")]
+        public async Task<IActionResult> Clone(int id)
+        {
+            try
+            {
+                var modelToClone = await _registerItemQuery.GetByIdAsync(id);
+
+                var clonedModel = await _registerItemService.CloneAsync(modelToClone);
+
+                if (clonedModel == null || clonedModel.Id != 0)
+                    return BadRequest();
+
+                var viewModel = await _registerItemService.CreateAsync(clonedModel);
+
+                return Created("", viewModel);
+
+            }
+            catch (Exception exception)
+            {
+                var result = HandleException(exception);
+
+                if (result != null)
+                    return result;
+
+                throw;
+            }
+        }
+
+
         [ApiExplorerSettings(GroupName = "internal")]
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Update(int id, [FromBody] RegisterItemViewModel viewModel)
