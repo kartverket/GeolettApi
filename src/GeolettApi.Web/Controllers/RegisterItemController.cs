@@ -97,7 +97,7 @@ namespace Geonorge.TiltaksplanApi.Web.Controllers
         }
 
         [HttpPost]
-        [Route("clone{id:int}")]
+        [Route("clone/{id:int}")]
         [ApiExplorerSettings(GroupName = "internal")]
         public async Task<IActionResult> Clone(int id)
         {
