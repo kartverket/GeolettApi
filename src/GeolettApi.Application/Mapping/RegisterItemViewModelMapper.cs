@@ -112,6 +112,15 @@ namespace GeolettApi.Application.Mapping
                     excludedLinks.Add(domainModel.Reference.CircularFromMinistryId.Value);
             }
 
+            var statuses = Domain.Extensions.EnumExtensions.EnumToSelectOptions<Status>();
+
+            string status = statuses.Where(s => s.Value == (int)Status.Submitted).Select(y => y.Label).FirstOrDefault();
+
+            if (domainModel.Status.HasValue) 
+            {
+                status = statuses.Where(s => s.Value == (int)domainModel.Status.Value).Select(y => y.Label).FirstOrDefault();
+            }
+
             return new Geolett
             {
                 ID = domainModel.Uuid.ToString(),
@@ -122,6 +131,7 @@ namespace GeolettApi.Application.Mapping
                 Dialogtekst = domainModel.DialogText,
                 MuligeTiltak = domainModel.PossibleMeasures,
                 Veiledning = domainModel.Guidance,
+                Status = status,
                 Datasett = _dataSetViewModelMapper.MapToGeolett(domainModel.DataSet),
                 Referanse = _referenceViewModelMapper.MapToGeolett(domainModel.Reference),
                 TekniskKommentar = domainModel.TechnicalComment,

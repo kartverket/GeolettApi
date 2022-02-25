@@ -46,6 +46,7 @@ namespace GeolettApi.Application.Models
         /// Veiledende tekst om ett eller flere av de mulige tiltakene
         /// </summary>
         public string Veiledning { get; set; }
+        public string Status { get; set; }
         public Datasett Datasett { get; set; }
         public Referanse Referanse { get; set; }
         /// <example></example>
