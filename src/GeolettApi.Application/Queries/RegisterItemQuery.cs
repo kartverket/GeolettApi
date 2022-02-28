@@ -42,7 +42,7 @@ namespace GeolettApi.Application.Queries
             var viewModels = registerItems
                 .ConvertAll(registerItem => _registerItemViewModelMapper.MapToViewModel(registerItem));
 
-            return viewModels;
+            return viewModels.OrderBy(o => o.ContextType).ToList();
         }
 
         public async Task<List<Geolett>> GetAllAsync()
