@@ -5,6 +5,7 @@ using GeolettApi.Infrastructure.DataModel;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace GeolettApi.Application.Queries
 {
@@ -63,7 +64,7 @@ namespace GeolettApi.Application.Queries
             var viewModels = registerItems
                 .ConvertAll(registerItem => _registerItemViewModelMapper.MapToGeolett(registerItem));
 
-            return viewModels;
+            return viewModels.OrderBy(o => o.KontekstType).ToList();
         }
 
 
