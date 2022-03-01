@@ -138,7 +138,7 @@ namespace GeolettApi.Application.Services
         {
             RegisterItemViewModel registerItemViewModel = new RegisterItemViewModel();
             registerItemViewModel.Id = 0;
-            registerItemViewModel.Title = model.Title + " - under konstruksjon";
+            registerItemViewModel.Title = model.Title + " (duplikat)";
             registerItemViewModel.ContextType = model.ContextType;
             registerItemViewModel.Owner = model.Owner;
             registerItemViewModel.Status = Status.Submitted;
