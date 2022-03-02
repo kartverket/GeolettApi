@@ -48,6 +48,7 @@ namespace GeolettApi.Application.Mapping
                 ContextType = viewModel.ContextType,
                 Title = viewModel.Title,
                 Description = viewModel.Description,
+                Status = viewModel.Status ?? Status.Submitted,
                 Links = links,
                 DialogText = viewModel.DialogText,
                 PossibleMeasures = viewModel.PossibleMeasures,
@@ -77,6 +78,7 @@ namespace GeolettApi.Application.Mapping
                 ContextType = domainModel.ContextType,
                 Title = domainModel.Title,
                 Description = domainModel.Description,
+                Status = domainModel.Status ?? Status.Submitted,
                 Links = domainModel.Links?.ConvertAll(link => _registerItemlinkViewModelMapper.MapToViewModel(link)),
                 DialogText = domainModel.DialogText,
                 PossibleMeasures = domainModel.PossibleMeasures,
@@ -110,6 +112,15 @@ namespace GeolettApi.Application.Mapping
                     excludedLinks.Add(domainModel.Reference.CircularFromMinistryId.Value);
             }
 
+            var statuses = Domain.Extensions.EnumExtensions.EnumToSelectOptions<Status>();
+
+            string status = statuses.Where(s => s.Value == (int)Status.Submitted).Select(y => y.Label).FirstOrDefault();
+
+            if (domainModel.Status.HasValue) 
+            {
+                status = statuses.Where(s => s.Value == (int)domainModel.Status.Value).Select(y => y.Label).FirstOrDefault();
+            }
+
             return new Geolett
             {
                 ID = domainModel.Uuid.ToString(),
@@ -120,6 +131,7 @@ namespace GeolettApi.Application.Mapping
                 Dialogtekst = domainModel.DialogText,
                 MuligeTiltak = domainModel.PossibleMeasures,
                 Veiledning = domainModel.Guidance,
+                Status = status,
                 Datasett = _dataSetViewModelMapper.MapToGeolett(domainModel.DataSet),
                 Referanse = _referenceViewModelMapper.MapToGeolett(domainModel.Reference),
                 TekniskKommentar = domainModel.TechnicalComment,

@@ -1,22 +1,20 @@
-﻿using GeolettApi.Application.Services;
+﻿using System;
+using GeolettApi.Application.Models;
+using GeolettApi.Domain.Extensions;
+using GeolettApi.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
 
 namespace GeolettApi.Web.Controllers
 {
     [ApiController]
     [ApiExplorerSettings(GroupName = "internal")]
     [Route("[controller]")]
-    public class SetupController : BaseController
+    public class OptionsController : BaseController
     {
-        private readonly ISetupService _setupService;
-
-        public SetupController(
-            ISetupService setupService,
+        public OptionsController(
             ILogger<SetupController> logger) : base(logger)
         {
-            _setupService = setupService;
         }
 
         [HttpGet]
@@ -24,9 +22,12 @@ namespace GeolettApi.Web.Controllers
         {
             try
             {
-                var setup = _setupService.Get();
+                var viewModel = new OptionsViewModel
+                {
+                    Statuses = EnumExtensions.EnumToSelectOptions<Status>()
+                };
 
-                return Ok(setup);
+                return Ok(viewModel);
             }
             catch (Exception exception)
             {

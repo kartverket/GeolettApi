@@ -9,6 +9,8 @@ using GeolettApi.Infrastructure.DataModel.UnitOfWork;
 using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Threading.Tasks;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace GeolettApi.Application.Services
 {
@@ -130,6 +132,97 @@ namespace GeolettApi.Application.Services
             await uow.SaveChangesAsync();
 
             return true;
+        }
+
+        public Task<RegisterItemViewModel> CloneAsync(RegisterItemViewModel model)
+        {
+            RegisterItemViewModel registerItemViewModel = new RegisterItemViewModel();
+            registerItemViewModel.Id = 0;
+            registerItemViewModel.Title = model.Title + " (duplikat)";
+            registerItemViewModel.ContextType = model.ContextType;
+            registerItemViewModel.Owner = model.Owner;
+            registerItemViewModel.Status = Status.Submitted;
+
+            registerItemViewModel.Description = model.Description;
+            registerItemViewModel.DialogText = model.DialogText;
+            registerItemViewModel.Guidance = model.Guidance;
+            registerItemViewModel.OtherComment = model.OtherComment;
+            registerItemViewModel.PossibleMeasures = model.PossibleMeasures;
+            registerItemViewModel.Sign1 = model.Sign1;
+            registerItemViewModel.Sign2 = model.Sign2;
+            registerItemViewModel.Sign3 = model.Sign3;
+            registerItemViewModel.Sign4 = model.Sign4;
+            registerItemViewModel.Sign5 = model.Sign5;
+            registerItemViewModel.Sign6 = model.Sign6;
+            registerItemViewModel.TechnicalComment = model.TechnicalComment;
+
+            //Dataset
+            if (model.DataSet != null)
+            {
+                DataSetViewModel dataSet = new DataSetViewModel();
+                dataSet.BufferDistance = model.DataSet.BufferDistance;
+                dataSet.BufferPossibleMeasures = model.DataSet.BufferPossibleMeasures;
+                dataSet.BufferText = model.DataSet.BufferText;
+                dataSet.Namespace = model.DataSet.Namespace;
+                dataSet.Title = model.DataSet.Title;
+                if (model.DataSet.TypeReference != null)
+                {
+                    dataSet.TypeReference = new ObjectTypeViewModel
+                    {
+                        Attribute = model.DataSet.TypeReference.Attribute,
+                        CodeValue = model.DataSet.TypeReference.CodeValue,
+                        Type = model.DataSet.TypeReference.Type
+                    };
+
+                    dataSet.UrlGmlSchema = model.DataSet.UrlGmlSchema;
+                    dataSet.UrlMetadata = model.DataSet.UrlMetadata;
+                    dataSet.UuidMetadata = model.DataSet.UuidMetadata;
+
+                    registerItemViewModel.DataSet = dataSet;
+                }
+            }
+
+            //Links
+            if(model.Links!= null) 
+            {
+                List<RegisterItemLinkViewModel> links = new List<RegisterItemLinkViewModel>();
+
+                foreach(var link in model.Links) 
+                {
+                    links.Add(new RegisterItemLinkViewModel 
+                    { 
+                        Link = new LinkViewModel { Text = link.Link.Text, Url = link.Link.Url } 
+                    });
+                }
+
+                registerItemViewModel.Links = links;
+            }
+
+            //References
+            if(model.Reference != null) 
+            {
+                ReferenceViewModel reference = new ReferenceViewModel();
+                reference.Title = model.Reference.Title;
+
+                if (model.Reference.CircularFromMinistry != null) 
+                {
+                    reference.CircularFromMinistry = new LinkViewModel { Text = model.Reference.CircularFromMinistry.Text, Url = model.Reference.CircularFromMinistry.Url };
+                }
+
+                if (model.Reference.Tek17 != null)
+                {
+                    reference.Tek17 = new LinkViewModel { Text = model.Reference.Tek17.Text, Url = model.Reference.Tek17.Url };
+                }
+
+                if (model.Reference.OtherLaw != null)
+                {
+                    reference.OtherLaw = new LinkViewModel { Text = model.Reference.OtherLaw.Text, Url = model.Reference.OtherLaw.Url };
+                }
+
+                registerItemViewModel.Reference = reference;
+            }
+
+            return Task.FromResult(registerItemViewModel);
         }
     }
 }
