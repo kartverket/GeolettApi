@@ -50,8 +50,12 @@ namespace GeolettApi.Application.Queries
 
             if (user == null)
                 viewModels = viewModels.Where(v => v.Status == Status.Valid).ToList();
+            else if (user != null && !user.IsAdmin)
+            {
+                viewModels = viewModels.Where(v => v.Owner.OrgNumber == user.OrganizationNumber || v.Status == Status.Valid).ToList();
+            }
 
-                return viewModels.OrderBy(o => o.ContextType).ToList();
+            return viewModels.OrderBy(o => o.ContextType).ToList();
         }
 
         public async Task<List<Geolett>> GetAllAsync()
