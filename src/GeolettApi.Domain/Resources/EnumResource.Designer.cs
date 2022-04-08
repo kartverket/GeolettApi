@@ -61,7 +61,7 @@ namespace GeolettApi.Domain.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sendt inn.
+        ///   Looks up a localized string similar to Under arbeid.
         /// </summary>
         internal static string Submitted {
             get {
@@ -70,7 +70,7 @@ namespace GeolettApi.Domain.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Gyldig.
+        ///   Looks up a localized string similar to Ferdig.
         /// </summary>
         internal static string Valid {
             get {

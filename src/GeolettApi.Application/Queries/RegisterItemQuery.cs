@@ -76,7 +76,7 @@ namespace GeolettApi.Application.Queries
             var user = await _geoIDService.GetUser();
 
             if (user == null)
-                viewModels = viewModels.Where(v => v.Status == "Gyldig").ToList();
+                viewModels = viewModels.Where(v => v.Status == "Ferdig").ToList();
 
             return viewModels.OrderBy(o => o.KontekstType).ToList();
         }
