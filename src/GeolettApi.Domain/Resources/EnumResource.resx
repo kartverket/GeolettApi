@@ -118,9 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Submitted" xml:space="preserve">
-    <value>Sendt inn</value>
+    <value>Under arbeid</value>
   </data>
   <data name="Valid" xml:space="preserve">
-    <value>Gyldig</value>
+    <value>Ferdig</value>
   </data>
 </root>

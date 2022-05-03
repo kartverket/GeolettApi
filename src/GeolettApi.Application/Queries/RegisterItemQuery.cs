@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using GeolettApi.Application.Services.Authorization.GeoID;
 
 namespace GeolettApi.Application.Queries
 {
@@ -13,13 +14,16 @@ namespace GeolettApi.Application.Queries
     {
         private readonly GeolettContext _context;
         private readonly IViewModelMapper<RegisterItem, RegisterItemViewModel, Geolett> _registerItemViewModelMapper;
+        private readonly IGeoIDService _geoIDService;
 
         public RegisterItemQuery(
             GeolettContext context,
-            IViewModelMapper<RegisterItem, RegisterItemViewModel, Geolett> registerItemViewModelMapper)
+            IViewModelMapper<RegisterItem, RegisterItemViewModel, Geolett> registerItemViewModelMapper,
+            IGeoIDService geoIDService)
         {
             _context = context;
             _registerItemViewModelMapper = registerItemViewModelMapper;
+            _geoIDService = geoIDService;
         }
 
         public async Task<List<RegisterItemViewModel>> GetAllInternalAsync()
@@ -42,6 +46,15 @@ namespace GeolettApi.Application.Queries
             var viewModels = registerItems
                 .ConvertAll(registerItem => _registerItemViewModelMapper.MapToViewModel(registerItem));
 
+            var user = await _geoIDService.GetUser();
+
+            if (user == null)
+                viewModels = viewModels.Where(v => v.Status == Status.Valid).ToList();
+            else if (user != null && !user.IsAdmin)
+            {
+                viewModels = viewModels.Where(v => v.Owner.OrgNumber == user.OrganizationNumber || v.Status == Status.Valid).ToList();
+            }
+
             return viewModels.OrderBy(o => o.ContextType).ToList();
         }
 
@@ -63,6 +76,11 @@ namespace GeolettApi.Application.Queries
 
             var viewModels = registerItems
                 .ConvertAll(registerItem => _registerItemViewModelMapper.MapToGeolett(registerItem));
+
+            var user = await _geoIDService.GetUser();
+
+            if (user == null)
+                viewModels = viewModels.Where(v => v.Status == "Ferdig").ToList();
 
             return viewModels.OrderBy(o => o.KontekstType).ToList();
         }
