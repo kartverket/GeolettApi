@@ -1,0 +1,56 @@
+# nonk8s
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "GeolettApi"
+  tags:
+  - "public"
+spec:
+  type: "service"
+  lifecycle: "production"
+  owner: "datadeling_og_distribusjon"
+  system: "geonorge"
+  providesApis:
+  - "GeolettApi-api"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Group"
+metadata:
+  name: "security_champion_GeolettApi"
+  title: "Security Champion GeolettApi"
+spec:
+  type: "security_champion"
+  parent: "land_security_champions"
+  members:
+  - "dagolav"
+  children:
+  - "resource:GeolettApi"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Resource"
+metadata:
+  name: "GeolettApi"
+  links:
+  - url: "https://github.com/kartverket/GeolettApi"
+    title: "GeolettApi på GitHub"
+spec:
+  type: "repo"
+  owner: "security_champion_GeolettApi"
+  dependencyOf:
+  - "component:GeolettApi"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "API"
+metadata:
+  name: "GeolettApi-api"
+  tags:
+  - "public"
+spec:
+  type: "openapi"
+  lifecycle: "production"
+  owner: "datadeling_og_distribusjon"
+  definition: |
+    openapi: "3.0.0"
+    info:
+        title: GeolettApi API
+    paths:
