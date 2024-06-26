@@ -148,15 +148,15 @@ namespace GeolettApi.Application.Mapping
                 return null;
 
             var excludedLinks = new List<int>();
-            if(domainModel.Reference != null) 
-            {
-                if (domainModel.Reference.OtherLawId.HasValue)
-                    excludedLinks.Add(domainModel.Reference.OtherLawId.Value);
-                if (domainModel.Reference.Tek17Id.HasValue)
-                    excludedLinks.Add(domainModel.Reference.Tek17Id.Value);
-                if (domainModel.Reference.CircularFromMinistryId.HasValue)
-                    excludedLinks.Add(domainModel.Reference.CircularFromMinistryId.Value);
-            }
+            //if(domainModel.Reference != null) 
+            //{
+            //    if (domainModel.Reference.OtherLawId.HasValue)
+            //        excludedLinks.Add(domainModel.Reference.OtherLawId.Value);
+            //    if (domainModel.Reference.Tek17Id.HasValue)
+            //        excludedLinks.Add(domainModel.Reference.Tek17Id.Value);
+            //    if (domainModel.Reference.CircularFromMinistryId.HasValue)
+            //        excludedLinks.Add(domainModel.Reference.CircularFromMinistryId.Value);
+            //}
 
             var statuses = Domain.Extensions.EnumExtensions.EnumToSelectOptions<Status>();
 
@@ -166,8 +166,7 @@ namespace GeolettApi.Application.Mapping
             {
                 status = statuses.Where(s => s.Value == (int)domainModel.Status.Value).Select(y => y.Label).FirstOrDefault();
             }
-
-            return new Geolett
+            var model = new Geolett
             {
                 ID = domainModel.Uuid.ToString(),
                 KontekstType = domainModel.ContextType,
@@ -189,6 +188,36 @@ namespace GeolettApi.Application.Mapping
                 Tegn5 = domainModel.Sign5,
                 Tegn6 = domainModel.Sign6
             };
+
+            if (domainModel.Reference != null)
+            {
+                if (domainModel.Reference.OtherLawId.HasValue)
+                {
+                    model.Lenker.Add(new Lenke
+                    {      
+                        Tittel = domainModel.Reference.OtherLaw.Text,
+                        Href = domainModel.Reference.OtherLaw.Url
+                    });
+                }
+                if (domainModel.Reference.Tek17Id.HasValue)
+                {
+                    model.Lenker.Add(new Lenke
+                    {
+                        Tittel = domainModel.Reference.Tek17.Text,
+                        Href = domainModel.Reference.Tek17.Url
+                    });
+                }
+                if (domainModel.Reference.CircularFromMinistryId.HasValue)
+                {
+                    model.Lenker.Add(new Lenke
+                    {
+                        Tittel = domainModel.Reference.CircularFromMinistry.Text,
+                        Href = domainModel.Reference.CircularFromMinistry.Url
+                    });
+                }
+            }
+
+            return model;
         }
 
         public Lenke MapToGeolett(RegisterItemLink link)
