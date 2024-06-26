@@ -70,6 +70,9 @@ namespace GeolettApi.Domain.Models
             Reference.Update(updated.Reference);
             }
 
+            //set reference to null since added to links
+            updated.Reference = null;
+
             if (TechnicalComment != updated.TechnicalComment)
                 TechnicalComment = updated.TechnicalComment;
 

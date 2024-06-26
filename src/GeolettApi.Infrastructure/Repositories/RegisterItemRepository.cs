@@ -1,4 +1,4 @@
-﻿using GeolettApi.Domain.Models;
+using GeolettApi.Domain.Models;
 using GeolettApi.Domain.Repositories;
 using GeolettApi.Infrastructure.DataModel;
 using Microsoft.EntityFrameworkCore;
@@ -38,6 +38,7 @@ namespace GeolettApi.Infrastructure.Repositories
                     .ThenInclude(reference => reference.CircularFromMinistry)
                 .Include(registerItem => registerItem.Links)
                     .ThenInclude(registerItemLink => registerItemLink.Link)
+                .AsNoTracking()
                 .SingleOrDefaultAsync(registerItem => registerItem.Id == id);
         }
 
