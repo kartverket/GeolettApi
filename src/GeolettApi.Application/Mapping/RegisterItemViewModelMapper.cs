@@ -70,8 +70,7 @@ namespace GeolettApi.Application.Mapping
         {
             if (domainModel == null)
                 return null;
-
-            return new RegisterItemViewModel
+            var model =  new RegisterItemViewModel
             {
                 Id = domainModel.Id,
                 Owner = _organizationViewModelMapper.MapToViewModel(domainModel.Owner),
@@ -95,6 +94,53 @@ namespace GeolettApi.Application.Mapping
                 Sign6 = domainModel.Sign6,
                 LastUpdated = domainModel.LastUpdated                
             };
+
+            //Add reference links to links
+
+            if (domainModel.Reference != null)
+            {
+                if (domainModel.Reference.OtherLawId.HasValue)
+                {
+                    model.Links.Add(new RegisterItemLinkViewModel
+                    {
+                        RegisterItemId = domainModel.Id,
+                        Link = new LinkViewModel
+                        {
+                            Id = domainModel.Reference.OtherLawId.Value,
+                            Text = domainModel.Reference.OtherLaw.Text,
+                            Url = domainModel.Reference.OtherLaw.Url
+                        }
+                    });
+                }
+                if (domainModel.Reference.Tek17Id.HasValue)
+                {
+                    model.Links.Add(new RegisterItemLinkViewModel
+                    {
+                        RegisterItemId = domainModel.Id,
+                        Link = new LinkViewModel
+                        {
+                            Id = domainModel.Reference.Tek17Id.Value,
+                            Text = domainModel.Reference.Tek17.Text,
+                            Url = domainModel.Reference.Tek17.Url
+                        }
+                    });
+                }
+                if (domainModel.Reference.CircularFromMinistryId.HasValue)
+                {
+                    model.Links.Add(new RegisterItemLinkViewModel
+                    {
+                        RegisterItemId = domainModel.Id,
+                        Link = new LinkViewModel
+                        {
+                            Id = domainModel.Reference.CircularFromMinistryId.Value,
+                            Text = domainModel.Reference.CircularFromMinistry.Text,
+                            Url = domainModel.Reference.CircularFromMinistry.Url
+                        }
+                    });
+                }
+            }
+
+            return model;
         }
         public Geolett MapToGeolett(RegisterItem domainModel)
         {
