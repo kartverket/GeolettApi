@@ -62,7 +62,8 @@ namespace GeolettApi.Application.Mapping
                 Sign3 = viewModel.Sign3,
                 Sign4 = viewModel.Sign4,
                 Sign5 = viewModel.Sign5,
-                Sign6 = viewModel.Sign6
+                Sign6 = viewModel.Sign6,
+                DegreeRisk = viewModel.Risk
             };
         }
 
@@ -92,7 +93,8 @@ namespace GeolettApi.Application.Mapping
                 Sign4 = domainModel.Sign4,
                 Sign5 = domainModel.Sign5,
                 Sign6 = domainModel.Sign6,
-                LastUpdated = domainModel.LastUpdated                
+                LastUpdated = domainModel.LastUpdated,
+                Risk = domainModel.DegreeRisk
             };
 
             //Add reference links to links

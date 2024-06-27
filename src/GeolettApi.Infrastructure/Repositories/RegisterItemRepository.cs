@@ -31,14 +31,13 @@ namespace GeolettApi.Infrastructure.Repositories
                 .Include(registerItem => registerItem.DataSet)
                     .ThenInclude(dataSet => dataSet.TypeReference)
                 .Include(registerItem => registerItem.Reference)
-                    .ThenInclude(reference => reference.Tek17)
+                    .ThenInclude(reference => reference.Tek17).AsNoTracking()
                 .Include(registerItem => registerItem.Reference)
-                    .ThenInclude(reference => reference.OtherLaw)
+                    .ThenInclude(reference => reference.OtherLaw).AsNoTracking()
                 .Include(registerItem => registerItem.Reference)
-                    .ThenInclude(reference => reference.CircularFromMinistry)
+                    .ThenInclude(reference => reference.CircularFromMinistry).AsNoTracking()
                 .Include(registerItem => registerItem.Links)
                     .ThenInclude(registerItemLink => registerItemLink.Link)
-                .AsNoTracking()
                 .SingleOrDefaultAsync(registerItem => registerItem.Id == id);
         }
 

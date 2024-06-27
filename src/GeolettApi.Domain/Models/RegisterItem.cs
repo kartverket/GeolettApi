@@ -30,6 +30,7 @@ namespace GeolettApi.Domain.Models
         public string Sign5 { get; set; }
         public string Sign6 { get; set; }
         public DateTime? LastUpdated { get; set; }
+        public string DegreeRisk { get; set; }
 
         public override void Update(EntityBase updatedEntity)
         {
@@ -99,6 +100,11 @@ namespace GeolettApi.Domain.Models
 
             if (OwnerId != updated.OwnerId)
                 OwnerId = updated.OwnerId;
+
+            if (DegreeRisk != updated.DegreeRisk)
+            {
+                DegreeRisk = updated.DegreeRisk;
+            }
         }
     }
 }
