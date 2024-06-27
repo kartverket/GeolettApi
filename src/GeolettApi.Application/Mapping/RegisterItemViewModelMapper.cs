@@ -108,7 +108,7 @@ namespace GeolettApi.Application.Mapping
                         RegisterItemId = domainModel.Id,
                         Link = new LinkViewModel
                         {
-                            Id = domainModel.Reference.OtherLawId.Value,
+                            //Id = domainModel.Reference.OtherLawId.Value,
                             Text = domainModel.Reference.OtherLaw.Text,
                             Url = domainModel.Reference.OtherLaw.Url
                         }
@@ -121,7 +121,7 @@ namespace GeolettApi.Application.Mapping
                         RegisterItemId = domainModel.Id,
                         Link = new LinkViewModel
                         {
-                            Id = domainModel.Reference.Tek17Id.Value,
+                            //Id = domainModel.Reference.Tek17Id.Value,
                             Text = domainModel.Reference.Tek17.Text,
                             Url = domainModel.Reference.Tek17.Url
                         }
@@ -134,7 +134,7 @@ namespace GeolettApi.Application.Mapping
                         RegisterItemId = domainModel.Id,
                         Link = new LinkViewModel
                         {
-                            Id = domainModel.Reference.CircularFromMinistryId.Value,
+                            //Id = domainModel.Reference.CircularFromMinistryId.Value,
                             Text = domainModel.Reference.CircularFromMinistry.Text,
                             Url = domainModel.Reference.CircularFromMinistry.Url
                         }
