@@ -10,9 +10,9 @@ namespace Geonorge.TiltaksplanApi.Application.Validation
         public RegisterItemValidator(
             IStringLocalizer<ValidationResource> localizer)
         {
-            RuleFor(registerItem => registerItem.ContextType)
-                .NotEmpty()
-                .WithMessage(registerItem => localizer["ContextType"]);
+            //RuleFor(registerItem => registerItem.ContextType)
+            //    .NotEmpty()
+            //    .WithMessage(registerItem => localizer["ContextType"]);
 
             RuleFor(registerItem => registerItem.Title)
                 .NotEmpty()
