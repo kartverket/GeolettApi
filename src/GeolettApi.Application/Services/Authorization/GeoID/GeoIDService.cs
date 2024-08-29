@@ -44,8 +44,8 @@ namespace GeolettApi.Application.Services.Authorization.GeoID
 
         private async Task<UserViewModel> GetUserFromToken(string authToken)
         {
-            var byteArray = Encoding.ASCII.GetBytes(_config.IntrospectionCredentials);
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+            //var byteArray = Encoding.ASCII.GetBytes(_config.IntrospectionCredentials);
+            //_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
 
             var formUrlEncodedContent = new FormUrlEncodedContent(new[] {
                 new KeyValuePair<string, string>("token", authToken),
