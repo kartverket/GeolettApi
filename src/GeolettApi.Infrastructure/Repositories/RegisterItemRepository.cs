@@ -1,4 +1,4 @@
-﻿using GeolettApi.Domain.Models;
+using GeolettApi.Domain.Models;
 using GeolettApi.Domain.Repositories;
 using GeolettApi.Infrastructure.DataModel;
 using Microsoft.EntityFrameworkCore;

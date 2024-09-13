@@ -26,7 +26,7 @@ namespace GeolettApi.Application.Queries
             _geoIDService = geoIDService;
         }
 
-        public async Task<List<RegisterItemViewModel>> GetAllInternalAsync()
+        public async Task<List<RegisterItemViewModel>> GetAllInternalAsync(string search = null)
         {
             var registerItems = await _context.RegisterItems
                 .Include(organization => organization.Owner)
@@ -55,7 +55,11 @@ namespace GeolettApi.Application.Queries
                 viewModels = viewModels.Where(v => v.Owner.OrgNumber == user.OrganizationNumber || v.Status == Status.Valid).ToList();
             }
 
-            return viewModels.OrderBy(o => o.ContextType).ToList();
+            if (!string.IsNullOrEmpty(search)) { 
+                viewModels = viewModels.Where(v => v.Title.ToLower().Contains(search.ToLower()) || v.Description.ToLower().Contains(search.ToLower()) || v.DialogText.ToLower().Contains(search.ToLower())).ToList();
+            }
+
+            return viewModels.OrderBy(o => o.Title).ToList();
         }
 
         public async Task<List<Geolett>> GetAllAsync()
@@ -82,7 +86,7 @@ namespace GeolettApi.Application.Queries
             if (user == null)
                 viewModels = viewModels.Where(v => v.Status == "Ferdig").ToList();
 
-            return viewModels.OrderBy(o => o.KontekstType).ToList();
+            return viewModels.OrderBy(o => o.Tittel).ToList();
         }
 
 

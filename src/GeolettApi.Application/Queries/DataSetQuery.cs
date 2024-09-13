@@ -26,7 +26,7 @@ namespace GeolettApi.Application.Queries
             throw new System.NotImplementedException();
         }
 
-        public async Task<List<DataSetViewModel>> GetAllInternalAsync()
+        public async Task<List<DataSetViewModel>> GetAllInternalAsync(string search = null)
         {
             var dataSets = await _context.DataSets
                 .Include(registerItem => registerItem.TypeReference)

@@ -1,5 +1,8 @@
-﻿namespace GeolettApi.Domain.Models
+﻿using System;
+
+namespace GeolettApi.Domain.Models
 {
+    [Obsolete("Not used any more, use general list of Links")]
     public class Reference : EntityBase
     {
         public string Title { get; set; }

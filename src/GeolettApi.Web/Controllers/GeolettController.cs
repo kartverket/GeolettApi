@@ -49,5 +49,29 @@ namespace Geonorge.TiltaksplanApi.Web.Controllers
                 throw;
             }
         }
+
+        [HttpGet]
+        [Route("search")]
+        [ApiExplorerSettings(GroupName = "v1")]
+        [ProducesResponseType(typeof(List<RegisterItemViewModel>), 200)]
+        public async Task<IActionResult> Search(string text)
+        {
+            try
+            {
+                var viewModels = await _registerItemQuery.GetAllInternalAsync(text);
+
+                return Ok(viewModels);
+            }
+            catch (Exception exception)
+            {
+                var result = HandleException(exception);
+
+                if (result != null)
+                    return result;
+
+                throw;
+            }
+        }
+
     }
 }

@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+using FluentValidation;
 using GeolettApi.Application.Helpers;
 using GeolettApi.Application.Mapping;
 using GeolettApi.Application.Models;
