@@ -57,6 +57,9 @@ namespace GeolettApi.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
+            // Register IHttpClientFactory
+            services.AddHttpClient();
+
             services.AddCors();
 
             services.AddControllers().AddNewtonsoftJson();

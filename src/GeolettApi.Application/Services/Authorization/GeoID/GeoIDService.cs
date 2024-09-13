@@ -15,7 +15,7 @@ namespace GeolettApi.Application.Services.Authorization.GeoID
 {
     public class GeoIDService : IGeoIDService
     {
-        private static readonly HttpClient _httpClient = new HttpClient();
+        private readonly HttpClient _httpClient;
         private readonly GeoIDConfiguration _config;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ILogger<GeoIDService> _logger;
@@ -23,11 +23,13 @@ namespace GeolettApi.Application.Services.Authorization.GeoID
         public GeoIDService(
             IOptions<GeoIDConfiguration> options,
             IHttpContextAccessor httpContextAccessor,
-            ILogger<GeoIDService> logger)
+            ILogger<GeoIDService> logger,
+            IHttpClientFactory httpClientFactory)
         {
             _config = options.Value;
             _httpContextAccessor = httpContextAccessor;
             _logger = logger;
+            _httpClient = httpClientFactory.CreateClient();
         }
 
         public async Task<UserViewModel> GetUser()
