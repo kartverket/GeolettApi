@@ -28,6 +28,7 @@ namespace GeolettApi.Application.Models
         public string Sign6 { get; set; }
         public DateTime? LastUpdated { get; set; }
         public string Risk { get; set; }
+        public string Theme { get; set; }
 
     }
 }
