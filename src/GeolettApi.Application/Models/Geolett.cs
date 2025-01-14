@@ -39,7 +39,7 @@ namespace GeolettApi.Application.Models
         /// <summary>
         /// Hva slags konsekvenser gir det at planlagt bygg får treff i dette temadatasettet? Vil det bety en høy risiko for forbud mot å bygge i området? Krever det mer utredning? Eller er det nyttig informasjon til bruk i videre planlegging, uten særlig konflikt?
         /// </summary>
-        /// <example>high</example>
+        /// <example>Høy grad av konflikt, risiko for byggeforbud</example>
         public string GradAvKonflikt { get; set; }
         /// <summary>
         /// Lenker om det er ønskelig å lenke til mer utfyllende informasjon
