@@ -178,6 +178,8 @@ namespace GeolettApi.Application.Mapping
                 KontekstType = domainModel.ContextType,
                 Tittel = domainModel.Title,
                 ForklarendeTekst = domainModel.Description,
+                Bruksomraade = domainModel.Theme,
+                GradAvKonflikt = domainModel.DegreeRisk,
                 Lenker = domainModel.Links.Where(e => !excludedLinks.Contains(e.Id)).ToList()?.ConvertAll(link => _registerItemlinkViewModelMapper.MapToGeolett(link)),
                 Dialogtekst = domainModel.DialogText,
                 MuligeTiltak = domainModel.PossibleMeasures,

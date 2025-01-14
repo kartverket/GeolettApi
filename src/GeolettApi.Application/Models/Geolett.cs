@@ -32,6 +32,16 @@ namespace GeolettApi.Application.Models
         /// <example>Hul eik</example>
         public string ForklarendeTekst { get; set; }
         /// <summary>
+        /// Hvilket bruksområdet er det som er relevant for denne veiledningsteksten? Velg enten planarbeid eller byggesak
+        /// </summary>
+        /// <example>Bygg</example>
+        public string Bruksomraade { get; set; }
+        /// <summary>
+        /// Hva slags konsekvenser gir det at planlagt bygg får treff i dette temadatasettet? Vil det bety en høy risiko for forbud mot å bygge i området? Krever det mer utredning? Eller er det nyttig informasjon til bruk i videre planlegging, uten særlig konflikt?
+        /// </summary>
+        /// <example>high</example>
+        public string GradAvKonflikt { get; set; }
+        /// <summary>
         /// Lenker om det er ønskelig å lenke til mer utfyllende informasjon
         /// </summary>
         public List<Lenke> Lenker { get; set; }
