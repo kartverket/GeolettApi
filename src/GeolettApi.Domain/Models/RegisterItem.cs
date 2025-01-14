@@ -31,6 +31,7 @@ namespace GeolettApi.Domain.Models
         public string Sign6 { get; set; }
         public DateTime? LastUpdated { get; set; }
         public string DegreeRisk { get; set; }
+        public string Theme { get; set; }
 
         public override void Update(EntityBase updatedEntity)
         {
@@ -104,6 +105,11 @@ namespace GeolettApi.Domain.Models
             if (DegreeRisk != updated.DegreeRisk)
             {
                 DegreeRisk = updated.DegreeRisk;
+            }
+
+            if (Theme != updated.Theme)
+            {
+                Theme = updated.Theme;
             }
         }
     }

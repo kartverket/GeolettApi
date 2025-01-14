@@ -1,5 +1,6 @@
 ﻿using GeolettApi.Application.Models;
 using GeolettApi.Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -63,7 +64,9 @@ namespace GeolettApi.Application.Mapping
                 Sign4 = viewModel.Sign4,
                 Sign5 = viewModel.Sign5,
                 Sign6 = viewModel.Sign6,
-                DegreeRisk = viewModel.Risk
+                DegreeRisk = viewModel.Risk,
+                Theme = viewModel.Theme
+                
             };
         }
 
@@ -94,7 +97,9 @@ namespace GeolettApi.Application.Mapping
                 Sign5 = domainModel.Sign5,
                 Sign6 = domainModel.Sign6,
                 LastUpdated = domainModel.LastUpdated,
-                Risk = domainModel.DegreeRisk
+                Risk = domainModel.DegreeRisk,
+                Theme = domainModel.Theme
+
             };
 
             //Add reference links to links
@@ -174,6 +179,8 @@ namespace GeolettApi.Application.Mapping
                 KontekstType = domainModel.ContextType,
                 Tittel = domainModel.Title,
                 ForklarendeTekst = domainModel.Description,
+                Bruksomraade = domainModel.Theme,
+                GradAvKonflikt = UserFriendlyDegreeRisk(domainModel.DegreeRisk),
                 Lenker = domainModel.Links.Where(e => !excludedLinks.Contains(e.Id)).ToList()?.ConvertAll(link => _registerItemlinkViewModelMapper.MapToGeolett(link)),
                 Dialogtekst = domainModel.DialogText,
                 MuligeTiltak = domainModel.PossibleMeasures,
@@ -220,6 +227,16 @@ namespace GeolettApi.Application.Mapping
             }
 
             return model;
+        }
+
+        private string UserFriendlyDegreeRisk(string degreeRisk)
+        {
+            if(degreeRisk == "high")
+                degreeRisk = "Høy grad av konflikt, risiko for byggeforbud";
+            else if (degreeRisk == "low")
+                degreeRisk = "Lav grad av konflikt, informasjon om området";
+
+            return degreeRisk;
         }
 
         public Lenke MapToGeolett(RegisterItemLink link)
