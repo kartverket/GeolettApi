@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace GeolettApi.Application.Models
@@ -35,12 +36,12 @@ namespace GeolettApi.Application.Models
         /// Hvilket bruksområdet er det som er relevant for denne veiledningsteksten? Velg enten planarbeid eller byggesak
         /// </summary>
         /// <example>Bygg</example>
-        public string Bruksomraade { get; set; }
+        public Bruksomraade Bruksomraade { get; set; }
         /// <summary>
         /// Hva slags konsekvenser gir det at planlagt bygg får treff i dette temadatasettet? Vil det bety en høy risiko for forbud mot å bygge i området? Krever det mer utredning? Eller er det nyttig informasjon til bruk i videre planlegging, uten særlig konflikt?
         /// </summary>
-        /// <example>Høy grad av konflikt, risiko for byggeforbud</example>
-        public string GradAvKonflikt { get; set; }
+        /// <example>Høy</example>
+        public GradAvKonflikt GradAvKonflikt { get; set; }
         /// <summary>
         /// Lenker om det er ønskelig å lenke til mer utfyllende informasjon
         /// </summary>
@@ -151,5 +152,19 @@ namespace GeolettApi.Application.Models
         public string Href { get; set; }
         /// <example>Les mer om hul eik</example>
         public string Tittel { get; set; }
+    }
+
+    [JsonConverter(typeof(JsonStringEnumConverter))]
+    public enum Bruksomraade
+    {
+        Bygg,
+        Plan
+    }
+
+    [JsonConverter(typeof(JsonStringEnumConverter))]
+    public enum GradAvKonflikt
+    {
+        Høy,
+        Lav
     }
 }

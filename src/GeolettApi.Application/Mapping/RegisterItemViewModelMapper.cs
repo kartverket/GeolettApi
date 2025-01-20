@@ -179,8 +179,8 @@ namespace GeolettApi.Application.Mapping
                 KontekstType = domainModel.ContextType,
                 Tittel = domainModel.Title,
                 ForklarendeTekst = domainModel.Description,
-                Bruksomraade = domainModel.Theme,
-                GradAvKonflikt = UserFriendlyDegreeRisk(domainModel.DegreeRisk),
+                Bruksomraade = GetBruksomraade(domainModel.Theme),
+                GradAvKonflikt = GetDegreeRisk(domainModel.DegreeRisk),
                 Lenker = domainModel.Links.Where(e => !excludedLinks.Contains(e.Id)).ToList()?.ConvertAll(link => _registerItemlinkViewModelMapper.MapToGeolett(link)),
                 Dialogtekst = domainModel.DialogText,
                 MuligeTiltak = domainModel.PossibleMeasures,
@@ -229,14 +229,20 @@ namespace GeolettApi.Application.Mapping
             return model;
         }
 
-        private string UserFriendlyDegreeRisk(string degreeRisk)
+        private Bruksomraade GetBruksomraade(string theme)
+        {
+            if (theme == "Plan")
+                return Bruksomraade.Plan;
+            else
+                return Bruksomraade.Bygg;
+        }
+
+        private GradAvKonflikt GetDegreeRisk(string degreeRisk)
         {
             if(degreeRisk == "high")
-                degreeRisk = "Høy grad av konflikt, risiko for byggeforbud";
-            else if (degreeRisk == "low")
-                degreeRisk = "Lav grad av konflikt, informasjon om området";
-
-            return degreeRisk;
+                return GradAvKonflikt.Høy;
+            else
+                return GradAvKonflikt.Lav;
         }
 
         public Lenke MapToGeolett(RegisterItemLink link)
