@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -157,14 +158,18 @@ namespace GeolettApi.Application.Models
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum Bruksomraade
     {
+        [Description("Bygg")]
         Bygg,
+        [Description("Plan")]
         Plan
     }
 
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum GradAvKonflikt
     {
+        [Description("Høy")]
         Høy,
+        [Description("Lav")]
         Lav
     }
 }
