@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json.Converters;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -34,17 +36,17 @@ namespace GeolettApi.Application.Models
         /// <example>Hul eik</example>
         public string ForklarendeTekst { get; set; }
         /// <summary>
-        /// Hvilket bruksområdet er det som er relevant for denne veiledningsteksten? Velg enten planarbeid eller byggesak
+        /// Hvilket bruksområdet er det som er relevant for denne veiledningsteksten? Velg enten planarbeid eller byggesak. Verdier er "Bygg" og "Plan".
         /// </summary>
         /// <example>Bygg</example>
-        public Bruksomraade Bruksomraade { get; set; }
+        public string Bruksomraade { get; set; }
         /// <summary>
-        /// Hva slags konsekvenser gir det at planlagt bygg får treff i dette temadatasettet? Vil det bety en høy risiko for forbud mot å bygge i området? Krever det mer utredning? Eller er det nyttig informasjon til bruk i videre planlegging, uten særlig konflikt?
+        /// Hva slags konsekvenser gir det at planlagt bygg får treff i dette temadatasettet? Vil det bety en høy risiko for forbud mot å bygge i området? Krever det mer utredning? Eller er det nyttig informasjon til bruk i videre planlegging, uten særlig konflikt? Verdier er "Høy" og "Lav".
         /// </summary>
         /// <example>Høy</example>
-        public GradAvKonflikt GradAvKonflikt { get; set; }
+        public string GradAvKonflikt { get; set; }
         /// <summary>
-        /// Lenker om det er ønskelig å lenke til mer utfyllende informasjon
+        /// Lenker om det er ønskelig å lenke til mer utfyllende informasjon.
         /// </summary>
         public List<Lenke> Lenker { get; set; }
         /// <example>Tiltaket er plassert nærmere enn 15m fra stammen til en hul eik som er utvalgt naturtype. Det kan påvirke den hule eika negativt.</example>
@@ -153,23 +155,5 @@ namespace GeolettApi.Application.Models
         public string Href { get; set; }
         /// <example>Les mer om hul eik</example>
         public string Tittel { get; set; }
-    }
-
-    [JsonConverter(typeof(JsonStringEnumConverter))]
-    public enum Bruksomraade
-    {
-        [Description("Bygg")]
-        Bygg,
-        [Description("Plan")]
-        Plan
-    }
-
-    [JsonConverter(typeof(JsonStringEnumConverter))]
-    public enum GradAvKonflikt
-    {
-        [Description("Høy")]
-        Høy,
-        [Description("Lav")]
-        Lav
     }
 }

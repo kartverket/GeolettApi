@@ -63,8 +63,8 @@ namespace GeolettApi.Web
 
             services.AddCors();
 
-            services.AddControllers().AddNewtonsoftJson(options =>
-                options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter()));
+            services.AddControllers().AddNewtonsoftJson(
+                );
 
             services.AddSwaggerGen(options =>
             {

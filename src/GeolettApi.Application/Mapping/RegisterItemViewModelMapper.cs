@@ -179,7 +179,7 @@ namespace GeolettApi.Application.Mapping
                 KontekstType = domainModel.ContextType,
                 Tittel = domainModel.Title,
                 ForklarendeTekst = domainModel.Description,
-                Bruksomraade = GetBruksomraade(domainModel.Theme),
+                Bruksomraade = domainModel.Theme,
                 GradAvKonflikt = GetDegreeRisk(domainModel.DegreeRisk),
                 Lenker = domainModel.Links.Where(e => !excludedLinks.Contains(e.Id)).ToList()?.ConvertAll(link => _registerItemlinkViewModelMapper.MapToGeolett(link)),
                 Dialogtekst = domainModel.DialogText,
@@ -229,20 +229,14 @@ namespace GeolettApi.Application.Mapping
             return model;
         }
 
-        private Bruksomraade GetBruksomraade(string theme)
-        {
-            if (theme == "Plan")
-                return Bruksomraade.Plan;
-            else
-                return Bruksomraade.Bygg;
-        }
-
-        private GradAvKonflikt GetDegreeRisk(string degreeRisk)
+        private string GetDegreeRisk(string degreeRisk)
         {
             if(degreeRisk == "high")
-                return GradAvKonflikt.Høy;
-            else
-                return GradAvKonflikt.Lav;
+                return "Høy";
+            if (degreeRisk == "high")
+                return "Lav";
+
+            return null;
         }
 
         public Lenke MapToGeolett(RegisterItemLink link)
