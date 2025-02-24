@@ -36,6 +36,7 @@ using System.Linq;
 using GeolettApi.Application.Configuration;
 using System.Net;
 using System.Net.Http;
+using System.Text.Json.Serialization;
 
 namespace GeolettApi.Web
 {
@@ -62,7 +63,8 @@ namespace GeolettApi.Web
 
             services.AddCors();
 
-            services.AddControllers().AddNewtonsoftJson();
+            services.AddControllers().AddNewtonsoftJson(
+                );
 
             services.AddSwaggerGen(options =>
             {
