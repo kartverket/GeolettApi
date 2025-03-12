@@ -115,6 +115,10 @@ namespace GeolettApi.Application.Services.Authorization.GeoID
 
                 var responseBody = await response.Content.ReadAsStringAsync();
                 var json = JObject.Parse(responseBody);
+
+                userViewModel.Email = json["baat_email"]?.Value<string>();
+                userViewModel.Name = json["baat_name"]?.Value<string>();
+
                 var organization = json["baat_organization"];
 
                 if (organization == null)
