@@ -16,9 +16,9 @@ namespace GeolettApi.Infrastructure.DataModel.EntityConfiguration
                 .Property(dataSet => dataSet.Id)
                 .ValueGeneratedOnAdd();
 
-            builder
-                .Property(dataSet => dataSet.Title)
-                .IsRequired();
+            //builder
+            //    .Property(dataSet => dataSet.Title)
+            //    .IsRequired();
 
             builder
                 .HasOne(dataSet => dataSet.TypeReference)
