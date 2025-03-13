@@ -10,13 +10,13 @@ namespace Geonorge.TiltaksplanApi.Application.Validation
         public DataSetValidator(
             IStringLocalizer<ValidationResource> localizer)
         {
-            RuleFor(dataSet => dataSet.Title)
-                .NotEmpty()
-                .WithMessage(dataSet => localizer["Title"]);
+            //RuleFor(dataSet => dataSet.Title)
+            //    .NotEmpty()
+            //    .WithMessage(dataSet => localizer["Title"]);
 
-            RuleFor(dataSet => dataSet.TypeReference)
-                .SetValidator(new ObjectTypeValidator(localizer))
-                .When(dataSet => dataSet.TypeReference != null);
+            //RuleFor(dataSet => dataSet.TypeReference)
+            //    .SetValidator(new ObjectTypeValidator(localizer))
+            //    .When(dataSet => dataSet.TypeReference != null);
         }
     }
 }
