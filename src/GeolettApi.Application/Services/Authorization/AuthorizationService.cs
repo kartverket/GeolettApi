@@ -24,9 +24,9 @@ namespace GeolettApi.Application.Services.Authorization
 
             _accesses = new List<ActivityAccess>
             {
-                new ActivityAccess(UserActivity.CreateRegisterItem, new List<string> { GeonorgeRole.Admin, GeonorgeRole.Editor }, accessQuery.HasOwnership),
-                new ActivityAccess(UserActivity.UpdateRegisterItem, new List<string> { GeonorgeRole.Admin, GeonorgeRole.Editor }, accessQuery.HasOwnership),
-                new ActivityAccess(UserActivity.DeleteRegisterItem, new List<string> { GeonorgeRole.Admin, GeonorgeRole.Editor }, accessQuery.HasOwnership),
+                new ActivityAccess(UserActivity.CreateRegisterItem, new List<string> { GeonorgeRole.Admin, GeonorgeRole.Editor, GeonorgeRole.MetadataEditor }, accessQuery.HasOwnership),
+                new ActivityAccess(UserActivity.UpdateRegisterItem, new List<string> { GeonorgeRole.Admin, GeonorgeRole.Editor, GeonorgeRole.MetadataEditor }, accessQuery.HasOwnership),
+                new ActivityAccess(UserActivity.DeleteRegisterItem, new List<string> { GeonorgeRole.Admin, GeonorgeRole.Editor, GeonorgeRole.MetadataEditor }, accessQuery.HasOwnership),
             };
         }
 
