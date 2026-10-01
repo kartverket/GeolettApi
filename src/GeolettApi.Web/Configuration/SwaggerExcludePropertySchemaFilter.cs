@@ -1,5 +1,5 @@
 ﻿using GeolettApi.Application.Attributes;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Linq;
 using System.Reflection;
@@ -9,7 +9,7 @@ namespace GeolettApi.Web.Configuration
 {
     public class SwaggerExcludePropertySchemaFilter : ISchemaFilter
     {
-        public void Apply(OpenApiSchema schema, SchemaFilterContext context)
+        public void Apply(IOpenApiSchema schema, SchemaFilterContext context)
         {
             if (schema?.Properties == null)
                 return;
