@@ -1,6 +1,4 @@
-﻿using Amazon.Runtime.Internal.Util;
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Configuration;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -15,7 +13,6 @@ namespace GeolettApi.Web.Configuration
         {
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(configuration)
-                .Destructure.ByTransforming<RequestMetrics>(JsonConvert.SerializeObject)
                 .CreateLogger();
         }
     }
